@@ -1,8 +1,9 @@
 ﻿<Window x:Class="SAE.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Ships'n'Guns" Height="500" Width="700">
     <Grid>
-        
+        <Button Content="Open Settings" HorizontalAlignment="Left" Margin="98,32,0,0" VerticalAlignment="Top" Click="OpenSettings_Click"/>
+
     </Grid>
 </Window>

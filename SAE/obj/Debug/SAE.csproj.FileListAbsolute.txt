@@ -1,1 +1,18 @@
 C:\Users\rbs\Documents\Visual Studio 2013\SAE\SAE\bin\Debug\SAE.exe.config
+H:\SAE Projekt\dev\SAE\bin\Debug\SAE.exe.config
+H:\SAE Projekt\dev\SAE\bin\Debug\SAE.exe
+H:\SAE Projekt\dev\SAE\bin\Debug\SAE.pdb
+H:\SAE Projekt\dev\SAE\obj\Debug\SAE.csprojResolveAssemblyReference.cache
+H:\SAE Projekt\dev\SAE\obj\Debug\MainWindow.baml
+H:\SAE Projekt\dev\SAE\obj\Debug\MainWindow.g.cs
+H:\SAE Projekt\dev\SAE\obj\Debug\App.g.cs
+H:\SAE Projekt\dev\SAE\obj\Debug\SAE_MarkupCompile.cache
+H:\SAE Projekt\dev\SAE\obj\Debug\SAE.g.resources
+H:\SAE Projekt\dev\SAE\obj\Debug\SAE.Properties.Resources.resources
+H:\SAE Projekt\dev\SAE\obj\Debug\SAE.csproj.GenerateResource.Cache
+H:\SAE Projekt\dev\SAE\obj\Debug\SAE.exe
+H:\SAE Projekt\dev\SAE\obj\Debug\SAE.pdb
+H:\SAE Projekt\dev\SAE\bin\Debug\Json.dll
+H:\SAE Projekt\dev\SAE\bin\Debug\Json.pdb
+H:\SAE Projekt\dev\SAE\obj\Debug\SettingsWindow.baml
+H:\SAE Projekt\dev\SAE\obj\Debug\SettingsWindow.g.cs

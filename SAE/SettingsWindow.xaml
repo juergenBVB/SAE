@@ -1,0 +1,12 @@
+﻿<Window x:Class="SAE.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings" Height="300" Width="300">
+    <Grid>
+        <Label Content="Board size:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="100,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Player Color:" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
+        <Label Content="Enemy Color:" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
