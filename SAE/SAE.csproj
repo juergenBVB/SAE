@@ -53,6 +53,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AIDifficulty.cs" />
+    <Compile Include="AIOpponent.cs" />
+    <Compile Include="GameBoard.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Ship.cs" />
+    <Compile Include="ShipPart.cs" />
+    <Compile Include="ShipTypes.cs" />
+    <Compile Include="Square.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
