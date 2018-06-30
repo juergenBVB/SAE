@@ -8,8 +8,10 @@ namespace SAE
 {
     class Player
     {
-        private List<Square> hitLog;
-        private List<Ship> ships;
+        protected List<Square> hitLog;
+        protected List<Square> legalSquares;
+        protected List<Ship> ships;
+        protected GameBoard board;
 
         internal List<Ship> Ships
         {
@@ -22,14 +24,26 @@ namespace SAE
             get { return hitLog; }
             set { hitLog = value; }
         }
-        public Player()
+        public Player(GameBoard board, List<Ship> ships)
         {
-
+            this.board = board;
+            this.ships = ships;
         }
 
-        public void PlaceAllShips(List<Ship> ships)
+        protected void GetLegalSquares()
         {
-            this.ships = ships;
+            List<Square> tempList = new List<Square>();
+            foreach (Square sq in board.Squares)
+            {
+                foreach (Square hit in hitLog)
+                {
+                    if ((sq - hit) > 1)
+                    {
+                        tempList.Add(sq);
+                    }
+                }
+            }
+            legalSquares = tempList;
         }
     }
 }
