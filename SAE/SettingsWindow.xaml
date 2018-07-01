@@ -22,9 +22,9 @@
             <Label>Board size:</Label>
             <TextBox Grid.Column="1" Margin="0,5,0,5" Text="{Binding BoardSize}" />
             <Label Grid.Row="1">Player color:</Label>
-            <xctk:ColorPicker Grid.Row="1" Grid.Column="1" Name="colorPickerPlayer" SelectedColorChanged="ColorPickerPlayer_SelectedColorChanged" SelectedColor="{Binding PlayerColor}"></xctk:ColorPicker>
+            <xctk:ColorPicker Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" Name="colorPickerPlayer" SelectedColorChanged="ColorPickerPlayer_SelectedColorChanged" SelectedColor="{Binding PlayerColor}"></xctk:ColorPicker>
             <Label Grid.Row="2">Enemy color:</Label>
-            <xctk:ColorPicker Grid.Row="2" Grid.Column="1" Name="colorPickerEnemy" SelectedColorChanged="ColorPickerEnemy_SelectedColorChanged" SelectedColor="{Binding EnemyColor}"></xctk:ColorPicker>
+            <xctk:ColorPicker Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" Name="colorPickerEnemy" SelectedColorChanged="ColorPickerEnemy_SelectedColorChanged" SelectedColor="{Binding EnemyColor}"></xctk:ColorPicker>
             <Label Grid.Row="3">Difficulty:</Label>
             <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" ItemsSource="{Binding Source={local:EnumBindingSourceExtension {x:Type local:AIDifficulty}}}" SelectedValue="{Binding Difficulty}"/>
             <Label Grid.Row="4">Ship count:</Label>
