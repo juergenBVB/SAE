@@ -58,8 +58,9 @@
     </ApplicationDefinition>
     <Compile Include="Difficulties.cs" />
     <Compile Include="GameModes.cs" />
+	<Compile Include="Direction.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="SettingsWindow.xaml.cs">
+    <Compile Include="SettingsWindow.xaml.cs" />
     <Compile Include="AIDifficulty.cs" />
     <Compile Include="AIOpponent.cs" />
     <Compile Include="GameBoard.cs" />
@@ -68,8 +69,6 @@
     <Compile Include="ShipPart.cs" />
     <Compile Include="ShipTypes.cs" />
     <Compile Include="Square.cs" />
-      <DependentUpon>SettingsWindow.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
