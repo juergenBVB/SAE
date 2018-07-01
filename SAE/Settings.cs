@@ -29,14 +29,6 @@ namespace SAE
             this.GameMode = GameModes.Classic;
             this.PlayerName = "TestPlayer";
         }
-        internal IEnumerable<AIDifficulty> AIDifficultyValues
-        {
-            get
-            {
-                return Enum.GetValues(typeof(AIDifficulty))
-                    .Cast<AIDifficulty>();
-            }
-        }
 
         public GameModes GameMode
         {
@@ -95,7 +87,7 @@ namespace SAE
         {
             JsonSerializer serializer = new JsonSerializer();
             serializer.NullValueHandling = NullValueHandling.Ignore;
-            serializer.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+            serializer.Converters.Add(new StringEnumConverter());
 
             using (StreamWriter sw = new StreamWriter(@"../../config/settings.json"))
             using (JsonWriter writer = new JsonTextWriter(sw))
