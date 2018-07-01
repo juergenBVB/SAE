@@ -28,6 +28,14 @@ namespace SAE
             this.GameMode = GameModes.Classic;
             this.PlayerName = "TestPlayer";
         }
+        internal IEnumerable<AIDifficulty> AIDifficultyValues
+        {
+            get
+            {
+                return Enum.GetValues(typeof(AIDifficulty))
+                    .Cast<AIDifficulty>();
+            }
+        }
 
         public GameModes GameMode
         {

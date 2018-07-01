@@ -28,14 +28,14 @@ namespace SAE
         {
             get { return settings; }
             set { settings = value; }
-        }
+        }     
 
         public SettingsWindow()
         {
             InitializeComponent();
 
-            this.difficulty.Items.Add(AIDifficulty.Easy.ToString());
-            this.difficulty.Items.Add(AIDifficulty.Normal.ToString());
+            //this.difficulty.Items.Add(AIDifficulty.Easy.ToString());
+            //this.difficulty.Items.Add(AIDifficulty.Normal.ToString());
 
             Settings = Settings.LoadSettings();
             this.SettingsForm.DataContext = this.Settings;
@@ -63,7 +63,7 @@ namespace SAE
         {
             this.Settings.SaveSettings();
 
-            MessageBoxResult result = MessageBox.Show("Settings succesfully saved.",
+            MessageBox.Show("Settings succesfully saved.",
                                           "Settings",
                                           MessageBoxButton.OK,
                                           MessageBoxImage.Information);
