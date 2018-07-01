@@ -34,25 +34,9 @@ namespace SAE
         {
             InitializeComponent();
 
-            //this.difficulty.Items.Add(AIDifficulty.Easy.ToString());
-            //this.difficulty.Items.Add(AIDifficulty.Normal.ToString());
-
             Settings = Settings.LoadSettings();
             this.SettingsForm.DataContext = this.Settings;
-            updateForm();
-        }
-
-        private void updateForm()
-        {
-            //this.boardSize.Text = this.Settings.BoardSize.ToString();
-            //this.playerColor.Text = this.Settings.PlayerColor;
-            //this.enemyColor.Text = this.Settings.EnemyColor;
-            //this.difficulty.SelectedIndex = this.difficulty.Items.IndexOf(this.Settings.Difficulty.ToString());
-            //this.shipCount.Text = this.Settings.ShipCount.ToString();
-            //this.playerName.Text = this.Settings.PlayerName;
-        }
-
-     
+        }     
 
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)
         {
