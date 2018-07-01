@@ -1,12 +1,36 @@
 ﻿<Window x:Class="SAE.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Settings" Height="300" Width="300">
-    <Grid>
-        <Label Content="Board size:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="100,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Player Color:" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
-        <Label Content="Enemy Color:" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top"/>
+        Title="Settings" Height="300" Width="400" ResizeMode="NoResize">
+    <WrapPanel Width="300">
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label>Board size:</Label>
+            <TextBox Grid.Column="1" Margin="0,5,0,5" Name="boardSize" />
+            <Label Grid.Row="1">Player color:</Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" Name="playerColor" />
+            <Label Grid.Row="2">Enemy color:</Label>
+            <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,5,0,5" Name="enemyColor"/>
+            <Label Grid.Row="3">Diffictuly:</Label>
+            <TextBox Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Margin="0,5,0,5" Name="diffictuly"/>
+            <Label Grid.Row="4">Ship count:</Label>
+            <TextBox Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,5,0,5" Name="shipCount"/>
+            <Label Grid.Row="5">Player name:</Label>
+            <TextBox Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,5,0,5" Name="playerName"/>
+        </Grid>
+        <Button Content="Save" Width="75" Margin="10"/>
 
-    </Grid>
+    </WrapPanel>
+
 </Window>
