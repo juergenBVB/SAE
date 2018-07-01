@@ -54,7 +54,7 @@ namespace SAE
                 board.Squares.Find(x => x == sq).IsLegal = false;
 
                 // if square is actually a shippart, destroy it
-                if (sq.CheckHit())
+                if (sq.IsShipPart())
                 {
                     ShipPart sp = (ShipPart)board.Squares.Find(x => x == sq);
                     sp.Destroy();
@@ -64,6 +64,19 @@ namespace SAE
             }
             else
                 return false;
+        }
+
+        public Boolean ShipFound()
+        {
+            foreach (Square sq in board.Squares)
+            {
+                if (!sq.IsHit && sq.IsShipPart())
+                {
+                    return true;
+                }
+
+            }
+            return false;
         }
     }
 }

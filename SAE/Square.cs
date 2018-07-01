@@ -45,9 +45,8 @@ namespace SAE
 
         // returns true if square is actually a shippart
         // sets the isHit property to true, since square is now hit
-        public Boolean CheckHit()
+        public Boolean IsShipPart()
         {
-            this.isHit = true;
             return this.GetType().Equals(typeof(ShipPart));
         }
 

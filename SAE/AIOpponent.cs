@@ -133,16 +133,16 @@ namespace SAE
             return sq;
         }
 
-        private void Destroy()
+        private void TargetShip()
         {
             ShipPart sp = null;
             Boolean shipFits = false;
             Direction d = (Direction)0;
-            Ship targetShip;
+            Ship targetShip = null;
 
             foreach (Square sq in hitLog)
             {
-                if (sq.CheckHit())
+                if (sq.IsShipPart())
                 {
                     sp = (ShipPart)sq;
 
@@ -165,9 +165,7 @@ namespace SAE
                         }
 
                         if (shipFits)
-                        {
                             break;
-                        }
                     }
                 }
             }
@@ -175,6 +173,8 @@ namespace SAE
             if (shipFits)
             {
                 TargetSquare(FindNextSquareInDirection(sp, d));
+                if (targetShip.isDestroyed())
+                    ships.Remove(targetShip);
             }
         }
 
@@ -200,6 +200,18 @@ namespace SAE
                     break;
             }
             return tempSquare;
+        }
+
+        public void MakeMove()
+        {
+            if (!ShipFound())
+            {
+                TargetRandomSquare();
+            }
+            else
+            {
+                TargetShip();
+            }
         }
     }
 }
