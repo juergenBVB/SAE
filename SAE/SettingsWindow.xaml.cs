@@ -23,6 +23,13 @@ namespace SAE
     public partial class SettingsWindow : Window
     {
         private Settings settings;
+
+        internal Settings Settings
+        {
+            get { return settings; }
+            set { settings = value; }
+        }
+
         public SettingsWindow()
         {
             InitializeComponent();
@@ -30,18 +37,19 @@ namespace SAE
             this.difficulty.Items.Add(AIDifficulty.Easy.ToString());
             this.difficulty.Items.Add(AIDifficulty.Normal.ToString());
 
-            settings = Settings.LoadSettings();
+            Settings = Settings.LoadSettings();
+            this.SettingsForm.DataContext = this.Settings;
             updateForm();
         }
 
         private void updateForm()
         {
-            this.boardSize.Text = this.settings.BoardSize.ToString();
-            this.playerColor.Text = this.settings.PlayerColor;
-            this.enemyColor.Text = this.settings.EnemyColor;
-            this.difficulty.SelectedIndex = this.difficulty.Items.IndexOf(this.settings.Difficulty.ToString());
-            this.shipCount.Text = this.settings.ShipCount.ToString();
-            this.playerName.Text = this.settings.PlayerName;
+            //this.boardSize.Text = this.Settings.BoardSize.ToString();
+            //this.playerColor.Text = this.Settings.PlayerColor;
+            //this.enemyColor.Text = this.Settings.EnemyColor;
+            //this.difficulty.SelectedIndex = this.difficulty.Items.IndexOf(this.Settings.Difficulty.ToString());
+            //this.shipCount.Text = this.Settings.ShipCount.ToString();
+            //this.playerName.Text = this.Settings.PlayerName;
         }
 
      
@@ -53,14 +61,7 @@ namespace SAE
 
         private void Button_Save_Click(object sender, RoutedEventArgs e)
         {
-            this.settings.BoardSize = Int32.Parse(this.boardSize.Text);
-            this.settings.PlayerColor = this.playerColor.Text;
-            this.settings.EnemyColor = this.enemyColor.Text;
-            this.settings.Difficulty = Mapper.TextToDiffictulty(this.difficulty.SelectedValue.ToString());
-            this.settings.ShipCount = Int32.Parse(this.shipCount.Text);
-            this.settings.PlayerName = this.playerName.Text;
-
-            this.settings.SaveSettings();
+            this.Settings.SaveSettings();
 
             MessageBoxResult result = MessageBox.Show("Settings succesfully saved.",
                                           "Settings",

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Settings" Height="300" Width="400" ResizeMode="NoResize">
     <WrapPanel Width="300">
-        <Grid Margin="10">
+        <Grid Margin="10" Name="SettingsForm">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="200" />
@@ -17,17 +17,17 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label>Board size:</Label>
-            <TextBox Grid.Column="1" Margin="0,5,0,5" Name="boardSize" />
+            <TextBox Grid.Column="1" Margin="0,5,0,5" Text="{Binding BoardSize}" />
             <Label Grid.Row="1">Player color:</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" Name="playerColor" />
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" Text="{Binding PlayerColor}" />
             <Label Grid.Row="2">Enemy color:</Label>
-            <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,5,0,5" Name="enemyColor"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" Text="{Binding EnemyColor}" />
             <Label Grid.Row="3">Difficulty:</Label>
-            <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" Name="difficulty" ItemsSource="{Binding AIDifficultyValues}"/>
+            <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" Name="difficulty"/>
             <Label Grid.Row="4">Ship count:</Label>
-            <TextBox Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,5,0,5" Name="shipCount"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Margin="0,5,0,5" Text="{Binding ShipCount}"/>
             <Label Grid.Row="5">Player name:</Label>
-            <TextBox Grid.Row="5" Grid.Column="1" AcceptsReturn="True" Margin="0,5,0,5" Name="playerName"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Margin="0,5,0,5" Text="{Binding PlayerName}" />
         </Grid>
         <Button Content="Save" Width="75" Margin="10" Click="Button_Save_Click"/>
         <Button Content="Cancel" Width="75" Margin="10" Click="Button_Cancel_Click"/>
