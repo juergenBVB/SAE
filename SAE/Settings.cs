@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +29,7 @@ namespace SAE
             this.PlayerName = "TestPlayer";
         }
 
-        internal GameModes GameMode
+        public GameModes GameMode
         {
             get { return gameMode; }
             set { gameMode = value; }
@@ -47,7 +48,7 @@ namespace SAE
             set { shipCount = value; }
         }
 
-        internal AIDifficulty Difficulty
+        public AIDifficulty Difficulty
         {
             get { return difficulty; }
             set { difficulty = value; }
@@ -85,6 +86,7 @@ namespace SAE
         {
             JsonSerializer serializer = new JsonSerializer();
             serializer.NullValueHandling = NullValueHandling.Ignore;
+            serializer.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
 
             using (StreamWriter sw = new StreamWriter(@"../../config/settings.json"))
             using (JsonWriter writer = new JsonTextWriter(sw))

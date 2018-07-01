@@ -1,1 +1,1 @@
-{"PlayerName":"TestPlayer","ShipCount":5,"EnemyColor":"red","PlayerColor":"blue","BoardSize":55}
+{"GameMode":"Classic","PlayerName":"TestPlayer","ShipCount":5,"Difficulty":"Normal","EnemyColor":"red","PlayerColor":"blue","BoardSize":55}

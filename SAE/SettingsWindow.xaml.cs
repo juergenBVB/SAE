@@ -26,6 +26,10 @@ namespace SAE
         public SettingsWindow()
         {
             InitializeComponent();
+
+            this.difficulty.Items.Add(AIDifficulty.Easy.ToString());
+            this.difficulty.Items.Add(AIDifficulty.Normal.ToString());
+
             settings = Settings.LoadSettings();
             updateForm();
         }
@@ -35,10 +39,12 @@ namespace SAE
             this.boardSize.Text = this.settings.BoardSize.ToString();
             this.playerColor.Text = this.settings.PlayerColor;
             this.enemyColor.Text = this.settings.EnemyColor;
-            this.diffictuly.Text = this.settings.Difficulty.ToString();
+            this.difficulty.SelectedIndex = this.difficulty.Items.IndexOf(this.settings.Difficulty.ToString());
             this.shipCount.Text = this.settings.ShipCount.ToString();
             this.playerName.Text = this.settings.PlayerName;
         }
+
+     
 
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -50,7 +56,7 @@ namespace SAE
             this.settings.BoardSize = Int32.Parse(this.boardSize.Text);
             this.settings.PlayerColor = this.playerColor.Text;
             this.settings.EnemyColor = this.enemyColor.Text;
-            //this.settings.Difficulty = this.diffictuly.Text;
+            this.settings.Difficulty = Mapper.TextToDiffictulty(this.difficulty.SelectedValue.ToString());
             this.settings.ShipCount = Int32.Parse(this.shipCount.Text);
             this.settings.PlayerName = this.playerName.Text;
 
