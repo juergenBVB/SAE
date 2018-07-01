@@ -58,6 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="GameModes.cs" />
     <Compile Include="Direction.cs" />
+    <Compile Include="Mapper.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsWindow.xaml.cs" />
     <Compile Include="AIDifficulty.cs" />

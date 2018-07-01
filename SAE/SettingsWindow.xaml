@@ -23,7 +23,7 @@
             <Label Grid.Row="2">Enemy color:</Label>
             <TextBox Grid.Row="2" Grid.Column="1" AcceptsReturn="True" Margin="0,5,0,5" Name="enemyColor"/>
             <Label Grid.Row="3">Difficulty:</Label>
-            <TextBox Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Margin="0,5,0,5" Name="diffictuly"/>
+            <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" Name="difficulty" ItemsSource="{Binding AIDifficultyValues}"/>
             <Label Grid.Row="4">Ship count:</Label>
             <TextBox Grid.Row="4" Grid.Column="1" AcceptsReturn="True" Margin="0,5,0,5" Name="shipCount"/>
             <Label Grid.Row="5">Player name:</Label>
