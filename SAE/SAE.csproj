@@ -56,9 +56,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Difficulties.cs" />
     <Compile Include="GameModes.cs" />
-	<Compile Include="Direction.cs" />
+    <Compile Include="Direction.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsWindow.xaml.cs" />
     <Compile Include="AIDifficulty.cs" />

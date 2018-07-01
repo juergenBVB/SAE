@@ -14,7 +14,7 @@ namespace SAE
         private int boardSize;
         private string playerColor;
         private string enemyColor;
-        private Difficulties difficulty;
+        private AIDifficulty difficulty;
         private int shipCount;
         private GameModes gameMode;
         private string playerName;
@@ -23,11 +23,10 @@ namespace SAE
             this.BoardSize = 20;
             this.PlayerColor = "blue";
             this.EnemyColor = "red";
-            this.Difficulty = Difficulties.Easy;
+            this.Difficulty = AIDifficulty.Easy;
             this.ShipCount = 5;
             this.GameMode = GameModes.Classic;
-            this.PlayerName = "";
-
+            this.PlayerName = "TestPlayer";
         }
 
         internal GameModes GameMode
@@ -49,7 +48,7 @@ namespace SAE
             set { shipCount = value; }
         }
 
-        internal Difficulties Difficulty
+        internal AIDifficulty Difficulty
         {
             get { return difficulty; }
             set { difficulty = value; }

@@ -8,11 +8,11 @@ namespace SAE
 {
     class AIOpponent : Player
     {
-        private Difficulties difficulty;
+        private AIDifficulty difficulty;
         private List<Square> legalSquares;
         private Random rand;
 
-        public AIOpponent(GameBoard board, List<Ship> ships, Difficulties diff) : base(board, ships)
+        public AIOpponent(GameBoard board, List<Ship> ships, AIDifficulty diff) : base(board, ships)
         {
             this.difficulty = diff;
             rand = new Random(DateTime.Now.Millisecond);
