@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace SAE
 {
-    [Serializable]
     class Settings
     {
         private int boardSize;
@@ -73,11 +72,25 @@ namespace SAE
             set { boardSize = value; }
         }
 
+        public static Settings LoadSettings()
+        {
+            using (StreamReader file = File.OpenText(@"../../config/settings.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                return (Settings)serializer.Deserialize(file, typeof(Settings));
+            }
+        }
+
         public void SaveSettings()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Settings));
-            TextWriter writer = new StreamWriter("../../config/settings.xml");
-            serializer.Serialize(writer, this);
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.NullValueHandling = NullValueHandling.Ignore;
+
+            using (StreamWriter sw = new StreamWriter(@"../../config/settings.json"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                serializer.Serialize(writer, this);
+            }
         }
 
     }
