@@ -10,19 +10,12 @@ namespace SAE
     {
 
         private int positionX, positionY;
-        private Boolean isHit = false;
         private Boolean isLegal = true;
 
         public Boolean IsLegal
         {
             get { return isLegal; }
             set { isLegal = value; }
-        }
-
-        public Boolean IsHit
-        {
-            get { return isHit; }
-            set { isHit = value; }
         }
 
         public int PositionY
@@ -44,7 +37,6 @@ namespace SAE
         }
 
         // returns true if square is actually a shippart
-        // sets the isHit property to true, since square is now hit
         public Boolean IsShipPart()
         {
             return this.GetType().Equals(typeof(ShipPart));
@@ -69,6 +61,17 @@ namespace SAE
                 return false;
             else
                 return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() == typeof(Square))
+            {
+                Square sq = (Square)obj;
+                if ((this.PositionX == sq.PositionX) && (this.PositionY == sq.PositionY))
+                    return true;
+            }
+            return false;
         }
     }
 }

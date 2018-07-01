@@ -204,11 +204,11 @@ namespace SAE
 
         public void MakeMove()
         {
-            if (!ShipFound())
+            if (!ShipFound() || difficulty == AIDifficulty.Easy)
             {
                 TargetRandomSquare();
             }
-            else
+            else if (!(difficulty == AIDifficulty.Easy))
             {
                 TargetShip();
             }

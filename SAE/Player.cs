@@ -43,7 +43,6 @@ namespace SAE
             return sqList;
         }
 
-
         // target a specific square on the opponent's gameboard
         public Boolean TargetSquare(Square sq)
         {
@@ -70,7 +69,7 @@ namespace SAE
         {
             foreach (Square sq in board.Squares)
             {
-                if (!sq.IsHit && sq.IsShipPart())
+                if (sq.IsLegal && sq.IsShipPart())
                 {
                     return true;
                 }
