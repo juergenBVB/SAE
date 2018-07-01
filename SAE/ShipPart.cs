@@ -14,12 +14,17 @@ namespace SAE
         public Boolean Destroyed
         {
             get { return destroyed; }
-            set { destroyed = value; }
+            set { Destroy(); }
         }
 
         public ShipPart(int x, int y):base(x,y)
         {
            
+        }
+
+        public void Destroy()
+        {
+            destroyed = true;
         }
     }
 }

@@ -9,7 +9,6 @@ namespace SAE
     class Player
     {
         protected List<Square> hitLog;
-        protected List<Square> legalSquares;
         protected List<Ship> ships;
         protected GameBoard board;
 
@@ -30,20 +29,41 @@ namespace SAE
             this.ships = ships;
         }
 
-        protected void GetLegalSquares()
+        // updates the list of all targetable squares
+        protected List<Square> GetLegalSquaresOpp()
         {
-            List<Square> tempList = new List<Square>();
+            List<Square> sqList = new List<Square>();
             foreach (Square sq in board.Squares)
             {
-                foreach (Square hit in hitLog)
+                if (sq.IsLegal)
                 {
-                    if ((sq - hit) > 1)
-                    {
-                        tempList.Add(sq);
-                    }
+                    sqList.Add(sq);
                 }
             }
-            legalSquares = tempList;
+            return sqList;
+        }
+
+
+        // target a specific square on the opponent's gameboard
+        public Boolean TargetSquare(Square sq)
+        {
+            // if square isnt a legal target, do nothing and return false
+            if (board.Squares.Contains(sq) && sq.IsLegal)
+            {
+                hitLog.Add(sq);
+                board.Squares.Find(x => x == sq).IsLegal = false;
+
+                // if square is actually a shippart, destroy it
+                if (sq.CheckHit())
+                {
+                    ShipPart sp = (ShipPart)board.Squares.Find(x => x == sq);
+                    sp.Destroy();
+                    board.Squares[board.Squares.FindIndex(x => x == sq)] = sp;
+                }
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

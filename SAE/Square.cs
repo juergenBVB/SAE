@@ -8,9 +8,16 @@ namespace SAE
 {
     class Square
     {
-        
+
         private int positionX, positionY;
         private Boolean isHit = false;
+        private Boolean isLegal = true;
+
+        public Boolean IsLegal
+        {
+            get { return isLegal; }
+            set { isLegal = value; }
+        }
 
         public Boolean IsHit
         {
@@ -36,10 +43,33 @@ namespace SAE
             this.positionY = y;
         }
 
+        // returns true if square is actually a shippart
+        // sets the isHit property to true, since square is now hit
         public Boolean CheckHit()
         {
             this.isHit = true;
             return this.GetType().Equals(typeof(ShipPart));
+        }
+
+        public static int operator -(Square sq1, Square sq2)
+        {
+            return Math.Min(sq1.PositionX - sq2.PositionX, sq1.PositionY - sq2.PositionY);
+        }
+
+        public static Boolean operator ==(Square sq1, Square sq2)
+        {
+            if ((sq1.PositionX == sq2.PositionX) && (sq1.PositionY == sq2.PositionY))
+                return true;
+            else
+                return false;
+        }
+
+        public static Boolean operator !=(Square sq1, Square sq2)
+        {
+            if ((sq1.PositionX == sq2.PositionX) && (sq1.PositionY == sq2.PositionY))
+                return false;
+            else
+                return true;
         }
     }
 }
