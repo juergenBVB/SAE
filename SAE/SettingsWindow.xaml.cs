@@ -52,5 +52,15 @@ namespace SAE
                                           MessageBoxButton.OK,
                                           MessageBoxImage.Information);
         }
+
+        private void ColorPickerPlayer_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            this.Settings.PlayerColor = colorPickerPlayer.SelectedColor.Value;
+        }
+
+        private void ColorPickerEnemy_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            this.Settings.EnemyColor = colorPickerEnemy.SelectedColor.Value;
+        }
     }
 }

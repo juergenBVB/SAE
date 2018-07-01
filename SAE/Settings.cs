@@ -6,14 +6,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace SAE
 {
     class Settings
     {
         private int boardSize;
-        private string playerColor;
-        private string enemyColor;
+        private Color playerColor;
+        private Color enemyColor;
         private AIDifficulty difficulty;
         private int shipCount;
         private GameModes gameMode;
@@ -21,8 +22,8 @@ namespace SAE
 
         public Settings() {
             this.BoardSize = 20;
-            this.PlayerColor = "blue";
-            this.EnemyColor = "red";
+            this.PlayerColor = Colors.Blue;
+            this.EnemyColor = Colors.Red;
             this.Difficulty = AIDifficulty.Easy;
             this.ShipCount = 5;
             this.GameMode = GameModes.Classic;
@@ -62,13 +63,13 @@ namespace SAE
             set { difficulty = value; }
         }
 
-        public string EnemyColor
+        public Color EnemyColor
         {
             get { return enemyColor; }
             set { enemyColor = value; }
         }
 
-        public string PlayerColor
+        public Color PlayerColor
         {
             get { return playerColor; }
             set { playerColor = value; }
