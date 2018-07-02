@@ -27,6 +27,8 @@ namespace SAE
             set { hitLog = value; }
         }
 
+        public GameBoard Board { get => board; set => board = value; }
+
         public Player()
         {
             this.HitLog = new ObservableCollection<Square>();
@@ -34,17 +36,16 @@ namespace SAE
         public Player(GameBoard board, List<Ship> ships)
         {
             this.HitLog = new ObservableCollection<Square>();
-            this.board = board;
+            this.Board = board;
             this.ships = ships;
             this.legalSquares = board.Squares;
-            PlaceShips();
         }
 
         // updates the list of all targetable squares
         protected List<Square> GetLegalSquaresOpp()
         {
             List<Square> sqList = new List<Square>();
-            foreach (Square sq in board.Squares)
+            foreach (Square sq in Board.Squares)
             {
                 if (!sq.IsHit)
                 {
@@ -58,17 +59,17 @@ namespace SAE
         public Boolean TargetSquare(Square sq)
         {
             // if square isnt a legal target, do nothing and return false
-            if (board.Squares.Contains(sq) && !sq.IsHit)
+            if (Board.Squares.Contains(sq) && !sq.IsHit)
             {
                 hitLog.Insert(0, sq);
-                board.Squares.Find(x => x == sq).IsHit = true;
+                Board.Squares.Find(x => x == sq).IsHit = true;
 
                 // if square is actually a shippart, destroy it
                 if (sq.IsShipPart())
                 {
-                    ShipPart sp = (ShipPart)board.Squares.Find(x => x == sq);
+                    ShipPart sp = (ShipPart)Board.Squares.Find(x => x == sq);
                     sp.Destroy();
-                    board.Squares[board.Squares.FindIndex(x => x == sq)] = sp;
+                    Board.Squares[Board.Squares.FindIndex(x => x == sq)] = sp;
                     return true;
                 }
             }
@@ -77,7 +78,7 @@ namespace SAE
 
         public Boolean ShipFound()
         {
-            foreach (Square sq in board.Squares)
+            foreach (Square sq in Board.Squares)
             {
                 if (sq.IsLegal && sq.IsShipPart())
                 {

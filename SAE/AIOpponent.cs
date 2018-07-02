@@ -19,7 +19,7 @@ namespace SAE
         {
             this.difficulty = diff;
             rand = new Random(DateTime.Now.Millisecond);
-            legalSquares = GetLegalSquaresOpp();
+            LegalSquares = GetLegalSquaresOpp();
             PlaceShips();
         }
 
@@ -45,7 +45,7 @@ namespace SAE
 
                     if (!sp.Destroyed)
                     {
-                        foreach (Ship ship in board.Ships)
+                        foreach (Ship ship in Board.Ships)
                         {
                             for (int i = 0; i < 4; i++)
                             {
@@ -81,16 +81,16 @@ namespace SAE
             switch (d)
             {
                 case Direction.UP:
-                    tempSquare = board.Squares.Find(x => x.PositionX == sq.PositionX && x.PositionY == sq.PositionY - 1);
+                    tempSquare = Board.Squares.Find(x => x.PositionX == sq.PositionX && x.PositionY == sq.PositionY - 1);
                     break;
                 case Direction.DOWN:
-                    tempSquare = board.Squares.Find(x => x.PositionX == sq.PositionX && x.PositionY == sq.PositionY + 1);
+                    tempSquare = Board.Squares.Find(x => x.PositionX == sq.PositionX && x.PositionY == sq.PositionY + 1);
                     break;
                 case Direction.LEFT:
-                    tempSquare = board.Squares.Find(x => x.PositionX == sq.PositionX - 1 && x.PositionY == sq.PositionY);
+                    tempSquare = Board.Squares.Find(x => x.PositionX == sq.PositionX - 1 && x.PositionY == sq.PositionY);
                     break;
                 case Direction.RIGHT:
-                    tempSquare = board.Squares.Find(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY - 1);
+                    tempSquare = Board.Squares.Find(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY - 1);
                     break;
                 default:
                     tempSquare = null;
