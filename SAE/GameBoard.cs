@@ -30,11 +30,28 @@ namespace SAE
             set { squares = value; }
         }
 
-        public GameBoard(int size, List<Ship> ships, List<Square> squares)
+        public GameBoard(int size, List<Ship> ships, int boardSize)
         {
             this.size = size;
             this.ships = ships;
-            this.squares = squares;
+            this.size = boardSize;
+            GenerateSquares();
+        }
+
+        public void GenerateSquares()
+        {
+            int linex = 0;
+            int liney = 0;
+            for (int i = 0; i < Math.Pow(size, 2); i++)
+            {
+                if (linex == this.size)
+                {
+                    linex = 0;
+                    liney++;
+                }
+                this.squares.Add(new Square(linex, liney));
+                linex++;
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ namespace SAE
 
         private int positionX, positionY;
         private Boolean isLegal = true;
+        private Boolean isHit = false;
 
         public Boolean IsLegal
         {
@@ -29,6 +30,8 @@ namespace SAE
             get { return positionX; }
             set { positionX = value; }
         }
+
+        public bool IsHit { get => isHit; set => isHit = value; }
 
         public Square(int x, int y)
         {

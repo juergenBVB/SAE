@@ -42,7 +42,7 @@ namespace SAE
             List<Square> sqList = new List<Square>();
             foreach (Square sq in board.Squares)
             {
-                if (sq.IsLegal)
+                if (!sq.IsHit)
                 {
                     sqList.Add(sq);
                 }
@@ -54,10 +54,10 @@ namespace SAE
         public Boolean TargetSquare(Square sq)
         {
             // if square isnt a legal target, do nothing and return false
-            if (board.Squares.Contains(sq) && sq.IsLegal)
+            if (board.Squares.Contains(sq) && !sq.IsHit)
             {
                 hitLog.Add(sq);
-                board.Squares.Find(x => x == sq).IsLegal = false;
+                board.Squares.Find(x => x == sq).IsHit = true;
 
                 // if square is actually a shippart, destroy it
                 if (sq.IsShipPart())
