@@ -62,8 +62,7 @@ namespace SAE
             this.PlayerBoard.Items.Clear();
             this.PlayerBoard.Columns.Clear();
             this.OpponentBoard.Items.Clear();
-            this.OpponentBoard.Columns.Clear();
-            //generate opponent grid    
+            this.OpponentBoard.Columns.Clear(); 
             for (int i = 1; i < this.MainViewModel.MainGame.Settings.BoardSize; i++)
             {
                 DataGridTextColumn textColumn = new DataGridTextColumn();
