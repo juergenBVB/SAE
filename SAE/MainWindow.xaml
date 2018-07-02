@@ -18,7 +18,7 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label FontSize="16">Opponents board</Label>
-                    <DataGrid Name="OpponentBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" ColumnWidth="10" RowHeight="10"></DataGrid>
+                    <DataGrid Cursor="Cross" Name="OpponentBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" ColumnWidth="10" RowHeight="10"></DataGrid>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <Label FontSize="16">Player recent hits</Label>
@@ -28,7 +28,7 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label FontSize="16">Player board</Label>
-                    <DataGrid Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" RowHeight="10"></DataGrid>
+                    <DataGrid Cursor="Cross" Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" RowHeight="10"></DataGrid>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <Label FontSize="16">Opponent recent hits</Label>
