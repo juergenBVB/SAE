@@ -44,5 +44,43 @@ namespace SAE
             this.MainViewModel.MainScreenVisible = false;
             this.MainViewModel.EndScreenVisible = false;
         }
+
+        private void StartGame_click(object sender, RoutedEventArgs e)
+        {
+            this.MainViewModel.StartScreenVisible = false;
+            this.MainViewModel.MainScreenVisible = true;
+            this.MainViewModel.MainGame = new Game();
+            this.PlayerHitlog.ItemsSource = this.MainViewModel.MainGame.Player.HitLog;
+            this.OpponentHitlog.ItemsSource = this.MainViewModel.MainGame.Ai.HitLog;
+
+            this.generateGrids();
+        }
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            this.MainViewModel.MainGame.Player.HitLog.Insert(0, new Square(1, 1));
+            this.MainViewModel.MainGame.Player.HitLog.Insert(0, new Square(1, 2));
+            this.MainViewModel.MainGame.Player.HitLog.Insert(0, new Square(1, 3));
+            this.MainViewModel.MainGame.Player.HitLog.Insert(0, new Square(1, 4));
+            this.MainViewModel.MainGame.Player.HitLog.Insert(0, new ShipPart(1, 4));
+        }
+
+        private void generateGrids()
+        {
+            //generate opponent grid    
+            for (int i = 1; i < this.MainViewModel.MainGame.Settings.BoardSize; i++)
+            {
+                DataGridTextColumn textColumn = new DataGridTextColumn();
+                this.PlayerBoard.Columns.Add(textColumn);
+                textColumn = new DataGridTextColumn();
+                this.OpponentBoard.Columns.Add(textColumn);
+            }
+
+            for (int j = 1; j < this.MainViewModel.MainGame.Settings.BoardSize; j++)
+            {
+                this.PlayerBoard.Items.Add(new object[] { });
+                this.OpponentBoard.Items.Add(new object[] { });
+            }
+        }
     }
 }

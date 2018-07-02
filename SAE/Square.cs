@@ -36,6 +36,12 @@ namespace SAE
             this.positionY = y;
         }
 
+        public override string ToString()
+        {
+            String hitMiss = this.IsShipPart() ? "Hit" : "No Hit";
+            return String.Format("Square on position x: {0} / y: {1} targeted. Result: {2}.", this.PositionX, this.PositionY, hitMiss);
+        }
+
         // returns true if square is actually a shippart
         public Boolean IsShipPart()
         {

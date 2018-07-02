@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace SAE
 {
     class Player
     {
-        protected List<Square> hitLog;
+        protected ObservableCollection<Square> hitLog;
         protected List<Ship> ships;
         protected GameBoard board;
 
@@ -18,13 +19,19 @@ namespace SAE
             set { ships = value; }
         }
 
-        internal List<Square> HitLog
+        internal ObservableCollection<Square> HitLog
         {
             get { return hitLog; }
             set { hitLog = value; }
         }
+
+        public Player()
+        {
+            this.HitLog = new ObservableCollection<Square>();
+        }
         public Player(GameBoard board, List<Ship> ships)
         {
+            this.HitLog = new ObservableCollection<Square>();
             this.board = board;
             this.ships = ships;
         }

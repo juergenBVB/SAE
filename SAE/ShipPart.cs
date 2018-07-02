@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace SAE
 {
-    class ShipPart:Square
-    {
-        
+    class ShipPart : Square
+    {        
         Boolean destroyed = false;
 
         public Boolean Destroyed

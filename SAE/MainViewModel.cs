@@ -12,6 +12,7 @@ namespace SAE
         private bool startScreenVisible = false;
         private bool endScreenVisible = false;
         private bool mainScreenVisible = false;
+        private Game mainGame;
 
         public bool StartScreenVisible
         {
@@ -44,6 +45,8 @@ namespace SAE
                 NotifyPropertyChanged("MainScreenVisible");
             }
         }
+
+        internal Game MainGame { get => mainGame; set => mainGame = value; }
 
         private void NotifyPropertyChanged(string info)
         {

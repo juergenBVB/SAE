@@ -12,6 +12,11 @@ namespace SAE
         private List<Square> legalSquares;
         private Random rand;
 
+        public AIOpponent() : base()
+        {
+
+        }
+
         public AIOpponent(GameBoard board, List<Ship> ships, AIDifficulty diff) : base(board, ships)
         {
             this.difficulty = diff;

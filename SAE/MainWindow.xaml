@@ -10,12 +10,32 @@
     <Grid>
         <StackPanel Visibility="{Binding StartScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}" Width="Auto" Height="Auto">        
             <Label Margin="10" FontSize="48" HorizontalContentAlignment="Center">Battleships</Label>
-            <Button Margin="10" Padding="5" Height="30" FontWeight="Bold" Content="Start game" HorizontalAlignment="Center"></Button>
+            <Button Margin="10" Padding="5" Height="30" FontWeight="Bold" Content="Start game" HorizontalAlignment="Center" Click="StartGame_click"></Button>
             <Button Margin="10" Padding="5" Height="30" FontWeight="Bold" Content="Open Settings" HorizontalAlignment="Center" Click="OpenSettings_Click" />
         </StackPanel>        
-        <StackPanel Visibility="{Binding MainScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}" Width="Auto" Height="Auto">
+        <StackPanel Visibility="{Binding MainScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}" Width="Auto" Height="Auto" Name="MainScreen">
             <Label Margin="10" FontSize="48" HorizontalContentAlignment="Center">Battleships</Label>
-            <Label Margin="10" FontSize="48" HorizontalContentAlignment="Center">Main Screen</Label>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <Label FontSize="16">Opponents board</Label>
+                    <DataGrid Name="OpponentBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None"></DataGrid>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label>Player recent hits:</Label>
+                    <ListBox Name="PlayerHitlog" Width="300" Height="300"></ListBox>
+                </StackPanel>
+                <Button Content="Test" Click="Test_Click" Height="20"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <Label FontSize="16">Player board</Label>
+                    <DataGrid Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None"></DataGrid>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Label>Opponent recent hits:</Label>
+                    <ListBox Name="OpponentHitlog" Width="300" Height="300"></ListBox>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
         <StackPanel Visibility="{Binding EndScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}" Width="Auto" Height="Auto">
             <Label Margin="10" FontSize="48" HorizontalContentAlignment="Center">Battleships</Label>
