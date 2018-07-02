@@ -34,6 +34,7 @@ namespace SAE
         {
             this.size = size;
             this.ships = ships;
+            this.squares = new List<Square>();
             GenerateSquares();
             GenerateShips();
         }
@@ -62,6 +63,24 @@ namespace SAE
             ships.Add(new Ship(ShipTypes.Battleship, new List<ShipPart>()));
             ships.Add(new Ship(ShipTypes.AircraftCarrier, new List<ShipPart>()));
 
+        }
+
+        public void AddShipsToBoard()
+        {
+            foreach (Ship ship in this.ships)
+            {
+                foreach (ShipPart sp in ship.ShipParts)
+                {
+                    this.Squares[GetIndexOfSquare(sp)] = sp;
+                }
+            }
+        }
+
+        private int GetIndexOfSquare(Square sq)
+        {
+            int tempY;
+            tempY = sq.PositionY * this.size;
+            return tempY + sq.PositionX;
         }
     }
 }
