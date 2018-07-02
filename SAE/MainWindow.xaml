@@ -18,7 +18,13 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label FontSize="16">Opponents board</Label>
-                    <DataGrid Cursor="Cross" Name="OpponentBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" ColumnWidth="10" RowHeight="10"></DataGrid>
+                    <DataGrid Cursor="Cross" Name="OpponentBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" ColumnWidth="10" RowHeight="10">
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <EventSetter Event="PreviewMouseDown" Handler="attack_Click"/>
+                            </Style>
+                        </DataGrid.CellStyle>
+                    </DataGrid>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <Label FontSize="16">Player recent hits</Label>
@@ -28,7 +34,8 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label FontSize="16">Player board</Label>
-                    <DataGrid Cursor="Cross" Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" RowHeight="10"></DataGrid>
+                    <DataGrid Cursor="Cross" Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" RowHeight="10">                        
+                    </DataGrid>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <Label FontSize="16">Opponent recent hits</Label>

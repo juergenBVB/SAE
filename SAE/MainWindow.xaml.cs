@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -84,6 +85,47 @@ namespace SAE
         {
             this.MainViewModel.MainScreenVisible = false;
             this.MainViewModel.StartScreenVisible = true;
+        }
+
+        private void attack_Click(object sender, MouseButtonEventArgs e)
+        {
+            DependencyObject dep = (DependencyObject)e.OriginalSource;
+
+            // iteratively traverse the visual tree
+            while ((dep != null) &&
+            !(dep is DataGridCell) && !(dep is DataGridColumnHeader))
+    {
+                dep = VisualTreeHelper.GetParent(dep);
+            }
+
+            if (dep is DataGridCell)
+            {
+                DataGridCell cell = dep as DataGridCell;
+
+                // navigate further up the tree
+                while ((dep != null) && !(dep is DataGridRow))
+                {
+                    dep = VisualTreeHelper.GetParent(dep);
+                }
+
+                DataGridRow row = dep as DataGridRow;
+                
+            }
+
+            int index = FindRowIndex((DataGridRow)dep);
+            int column = ((DataGridCell)sender).Column.DisplayIndex;
+        }
+
+        private int FindRowIndex(DataGridRow row)
+        {
+            DataGrid dataGrid =
+                ItemsControl.ItemsControlFromItemContainer(row)
+                as DataGrid;
+
+            int index = dataGrid.ItemContainerGenerator.
+                IndexFromContainer(row);
+
+            return index;
         }
     }
 }
