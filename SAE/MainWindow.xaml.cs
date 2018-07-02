@@ -37,5 +37,12 @@ namespace SAE
             SettingsWindow settingsWindow = new SettingsWindow();
             settingsWindow.Show();
         }
+
+        private void OpenStartScreen_Click(object sender, RoutedEventArgs e)
+        {
+            this.MainViewModel.StartScreenVisible = true;
+            this.MainViewModel.MainScreenVisible = false;
+            this.MainViewModel.EndScreenVisible = false;
+        }
     }
 }
