@@ -11,13 +11,6 @@ namespace SAE
         private ShipTypes shipType;
         private List<ShipPart> shipParts;
         private Boolean destroyed = false;
-        private Player owner;
-
-        public Player Owner
-        {
-            get { return owner; }
-            set { owner = value; }
-        }
 
         public Boolean Destroyed
         {
@@ -37,10 +30,10 @@ namespace SAE
             set { shipType = value; }
         }
 
-        public Ship(List<ShipPart> parts, Player owner)
+        public Ship(ShipTypes st, List<ShipPart> parts)
         {
+            this.shipType = st;
             this.shipParts = parts;
-            this.owner = owner;
         }
 
         public Boolean isDestroyed()
