@@ -110,8 +110,8 @@ namespace SAE
                 
             }
 
-            int row = FindRowIndex((DataGridRow)dep);
-            int column = ((DataGridCell)sender).Column.DisplayIndex;
+            int rowIndex = FindRowIndex((DataGridRow)dep);
+            int columnIndex = ((DataGridCell)sender).Column.DisplayIndex;
         }
 
         private int FindRowIndex(DataGridRow row)
