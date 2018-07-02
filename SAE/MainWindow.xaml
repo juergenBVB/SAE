@@ -15,8 +15,11 @@
             <Label Margin="10" FontSize="48" HorizontalContentAlignment="Center">Battleships</Label>
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
-                    <Label FontSize="16">Opponents board</Label>
+                    <Label FontSize="16" Margin="15 0 0 0">Opponents board</Label>
                     <DataGrid Cursor="Cross" Name="OpponentBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" ColumnWidth="10" RowHeight="10">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FF0000"/>
+                        </DataGrid.Resources>
                         <DataGrid.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <EventSetter Event="PreviewMouseDown" Handler="attack_Click"/>
@@ -28,11 +31,13 @@
                     <Label FontSize="16">Player recent hits</Label>
                     <ListBox Name="PlayerHitlog" Width="300" Height="300"></ListBox>
                 </StackPanel>
+                <Label Margin="10 0 0 0">Timer: </Label>
+                <Label Content="{Binding TimerValue}"></Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
-                    <Label FontSize="16">Player board</Label>
-                    <DataGrid Cursor="Cross" Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" RowHeight="10">                        
+                    <Label FontSize="16" Margin="15 0 0 0">Player board</Label>
+                    <DataGrid Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" RowHeight="10">                        
                     </DataGrid>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
