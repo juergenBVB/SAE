@@ -39,6 +39,11 @@ namespace SAE
             this.positionY = y;
         }
 
+        public Square()
+        {
+
+        }
+
         public override string ToString()
         {
             String hitMiss = this.IsShipPart() ? "Hit" : "No Hit";

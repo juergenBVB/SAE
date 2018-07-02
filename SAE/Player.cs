@@ -67,7 +67,7 @@ namespace SAE
                 // if square is actually a shippart, destroy it
                 if (sq.IsShipPart())
                 {
-                    ShipPart sp = (ShipPart)Board.Squares.Find(x => x == sq);
+                    ShipPart sp = Board.Squares.Find(x => x == sq) as ShipPart;
                     sp.Destroy();
                     Board.Squares[Board.Squares.FindIndex(x => x == sq)] = sp;
                     return true;
@@ -89,7 +89,7 @@ namespace SAE
             return false;
         }
 
-        protected Square GetRandomLegalSquare(Boolean isTarget)
+        protected Square GetRandomLegalSquare(Boolean isTarget = false)
         {
             Square sq;
             if (isTarget)
@@ -111,7 +111,8 @@ namespace SAE
 
             foreach (Ship s in Ships)
             {
-                sp = (ShipPart)GetRandomLegalSquare(false);
+
+                sp = new ShipPart(GetRandomLegalSquare());
                 shipLength = s.GetShipLength();
                 d = (Direction)rand.Next(3);
 
@@ -153,33 +154,33 @@ namespace SAE
                 switch (d)
                 {
                     case Direction.UP:
-                        if (!legalSquares.Contains(new ShipPart(X, Y - 1)))
+                        if (!legalSquares.Any(x => x.PositionX == X && x.PositionY == Y - 1))
                             DirectionIsLegal = false;
-                        else if (Opp && !GetLegalSquaresOpp().Contains(new ShipPart(X, Y - 1)))
+                        else if (Opp && !GetLegalSquaresOpp().Any(x => x.PositionX == X && x.PositionY == Y - 1))
                             DirectionIsLegal = false;
                         else
                             Y--;
                         break;
                     case Direction.DOWN:
-                        if (!legalSquares.Contains(new ShipPart(X, Y + 1)))
+                        if (!legalSquares.Any(x => x.PositionX == X && x.PositionY == Y + 1))
                             DirectionIsLegal = false;
-                        else if (Opp && !GetLegalSquaresOpp().Contains(new ShipPart(X, Y + 1)))
+                        else if (Opp && !GetLegalSquaresOpp().Any(x => x.PositionX == X && x.PositionY == Y + 1))
                             DirectionIsLegal = false;
                         else
                             Y++;
                         break;
                     case Direction.LEFT:
-                        if (!legalSquares.Contains(new ShipPart(X - 1, Y)))
+                        if (!legalSquares.Any(x => x.PositionX == X - 1 && x.PositionY == Y))
                             DirectionIsLegal = false;
-                        else if (Opp && !GetLegalSquaresOpp().Contains(new ShipPart(X - 1, Y)))
+                        else if (Opp && !GetLegalSquaresOpp().Any(x => x.PositionX == X - 1 && x.PositionY == Y))
                             DirectionIsLegal = false;
                         else
                             X--;
                         break;
                     case Direction.RIGHT:
-                        if (!legalSquares.Contains(new ShipPart(X + 1, Y)))
+                        if (!legalSquares.Any(x => x.PositionX == X + 1 && x.PositionY == Y))
                             DirectionIsLegal = false;
-                        else if (Opp && !GetLegalSquaresOpp().Contains(new ShipPart(X + 1, Y)))
+                        else if (Opp && !GetLegalSquaresOpp().Any(x => x.PositionX == X + 1 && x.PositionY == Y))
                             DirectionIsLegal = false;
                         else
                             X++;

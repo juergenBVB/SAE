@@ -20,6 +20,13 @@ namespace SAE
         {
            
         }
+        public ShipPart(Square sq) : base()
+        {
+            this.PositionX = sq.PositionX;
+            this.PositionY = sq.PositionY;
+            this.IsHit = sq.IsHit;
+            this.IsLegal = sq.IsLegal;
+        }
 
         public void Destroy()
         {
