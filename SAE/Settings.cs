@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using System.Windows.Media;
 
 namespace SAE
 {
-    class Settings
+    class Settings : INotifyPropertyChanged
     {
         private int boardSize;
         private Color playerColor;
@@ -33,45 +34,53 @@ namespace SAE
         public GameModes GameMode
         {
             get { return gameMode; }
-            set { gameMode = value; }
+            set { gameMode = value; this.NotifyPropertyChanged("GameMode"); }
         }
 
         public string PlayerName
         {
             get { return playerName; }
-            set { playerName = value; }
+            set { playerName = value; this.NotifyPropertyChanged("PlayerName"); }
         }
 
 
         public int ShipCount
         {
             get { return shipCount; }
-            set { shipCount = value; }
+            set { shipCount = value; this.NotifyPropertyChanged("ShipCount"); }
         }
 
         public AIDifficulty Difficulty
         {
             get { return difficulty; }
-            set { difficulty = value; }
+            set { difficulty = value; this.NotifyPropertyChanged("Difficulty"); }
         }
 
         public Color EnemyColor
         {
             get { return enemyColor; }
-            set { enemyColor = value; }
+            set { enemyColor = value; this.NotifyPropertyChanged("EnemyColor"); }
         }
 
         public Color PlayerColor
         {
             get { return playerColor; }
-            set { playerColor = value; }
+            set { playerColor = value; this.NotifyPropertyChanged("PlayerColor"); }
         }
 
 
         public int BoardSize
         {
             get { return boardSize; }
-            set { boardSize = value; }
+            set { boardSize = value; this.NotifyPropertyChanged("BoardSize"); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
         public static Settings LoadSettings()
