@@ -19,7 +19,7 @@ namespace SAE
         {
             this.difficulty = diff;
             rand = new Random(DateTime.Now.Millisecond);
-            LegalSquares = GetLegalSquaresOpp();
+            legalSquares = GetLegalSquaresOpp();
             PlaceShips();
         }
 
