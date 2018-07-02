@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace SAE
 {
@@ -12,7 +13,18 @@ namespace SAE
         private bool startScreenVisible = false;
         private bool endScreenVisible = false;
         private bool mainScreenVisible = false;
+        private string timerValue;
+        private DateTime timerStart;
         private Game mainGame;
+
+        public MainViewModel()
+        {
+            this.timerStart = DateTime.Now;
+            Timer timer = new Timer();
+            timer.Elapsed += new ElapsedEventHandler(this.OnTimerTick);
+            timer.Interval = 1000;
+            timer.Enabled = true;            
+        }
 
         public bool StartScreenVisible
         {
@@ -46,7 +58,18 @@ namespace SAE
             }
         }
 
-        internal Game MainGame { get => mainGame; set => mainGame = value; }
+        public string TimerValue
+        {
+            get { return timerValue; }
+
+            set
+            {
+                timerValue = value;
+                NotifyPropertyChanged("TimerValue");
+            }
+        }
+
+        internal Game MainGame { get => mainGame; set => mainGame = value; }        
 
         private void NotifyPropertyChanged(string info)
         {
@@ -57,5 +80,14 @@ namespace SAE
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnTimerTick(object source, ElapsedEventArgs e)
+        {
+            DateTime endTime = DateTime.Now;
+
+            TimeSpan span = endTime.Subtract(this.timerStart);
+            this.TimerValue = span.ToString();
+           
+        }
     }
 }
