@@ -58,6 +58,10 @@ namespace SAE
 
         private void generateGrids()
         {
+            this.PlayerBoard.Items.Clear();
+            this.PlayerBoard.Columns.Clear();
+            this.OpponentBoard.Items.Clear();
+            this.OpponentBoard.Columns.Clear();
             //generate opponent grid    
             for (int i = 1; i < this.MainViewModel.MainGame.Settings.BoardSize; i++)
             {
@@ -72,6 +76,12 @@ namespace SAE
                 this.PlayerBoard.Items.Add(new object[] { });
                 this.OpponentBoard.Items.Add(new object[] { });
             }
+        }
+
+        private void QuitGame_Click(object sender, RoutedEventArgs e)
+        {
+            this.MainViewModel.MainScreenVisible = false;
+            this.MainViewModel.StartScreenVisible = true;
         }
     }
 }
