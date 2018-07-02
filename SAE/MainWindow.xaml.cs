@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +21,16 @@ namespace SAE
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainViewModel mainViewModel;
         public MainWindow()
         {
             InitializeComponent();
+            this.MainViewModel = new MainViewModel();
+            this.DataContext = this.MainViewModel;
+            this.MainViewModel.StartScreenVisible = true;
         }
+
+        public MainViewModel MainViewModel { get => mainViewModel; set => mainViewModel = value; }
 
         private void OpenSettings_Click(object sender, RoutedEventArgs e)
         {
