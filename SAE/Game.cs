@@ -17,9 +17,9 @@ namespace SAE
         public Game()
         {
             this.Settings = Settings.LoadSettings();                      
-            this.AiGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>(), null);
+            this.AiGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>());
             this.Ai = new AIOpponent(this.AiGameBoard, this.AiGameBoard.Ships, this.Settings.Difficulty);
-            this.PlayerGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>(), null);
+            this.PlayerGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>());
             this.Player = new Player(this.PlayerGameBoard, this.PlayerGameBoard.Ships);            
         }
 

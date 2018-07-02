@@ -30,15 +30,15 @@ namespace SAE
             set { squares = value; }
         }
 
-        public GameBoard(int size, List<Ship> ships, int boardSize)
+        public GameBoard(int size, List<Ship> ships)
         {
             this.size = size;
             this.ships = ships;
-            this.size = boardSize;
             GenerateSquares();
+            GenerateShips();
         }
 
-        public void GenerateSquares()
+        private void GenerateSquares()
         {
             int linex = 0;
             int liney = 0;
@@ -52,6 +52,16 @@ namespace SAE
                 this.squares.Add(new Square(linex, liney));
                 linex++;
             }
+        }
+
+        private void GenerateShips()
+        {
+            ships.Add(new Ship(ShipTypes.UBoat, new List<ShipPart>()));
+            ships.Add(new Ship(ShipTypes.Destroyer, new List<ShipPart>()));
+            ships.Add(new Ship(ShipTypes.Frigate, new List<ShipPart>()));
+            ships.Add(new Ship(ShipTypes.Battleship, new List<ShipPart>()));
+            ships.Add(new Ship(ShipTypes.AircraftCarrier, new List<ShipPart>()));
+
         }
     }
 }
