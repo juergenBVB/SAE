@@ -18,7 +18,6 @@ namespace SAE
         public AIOpponent(GameBoard board, List<Ship> ships, AIDifficulty diff) : base(board, ships)
         {
             this.difficulty = diff;
-            rand = new Random(DateTime.Now.Millisecond);
             legalSquares = GetLegalSquaresOpp();
             PlaceShips();
         }

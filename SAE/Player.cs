@@ -38,7 +38,8 @@ namespace SAE
             this.HitLog = new ObservableCollection<Square>();
             this.Board = board;
             this.ships = ships;
-            this.legalSquares = board.Squares;
+            rand = new Random(DateTime.Now.Millisecond);
+            this.legalSquares = GetLegalSquaresOpp();
         }
 
         // updates the list of all targetable squares
