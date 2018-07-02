@@ -66,8 +66,10 @@ namespace SAE
             for (int i = 1; i < this.MainViewModel.MainGame.Settings.BoardSize; i++)
             {
                 DataGridTextColumn textColumn = new DataGridTextColumn();
+                textColumn.MaxWidth = 10;
                 this.PlayerBoard.Columns.Add(textColumn);
                 textColumn = new DataGridTextColumn();
+                textColumn.MaxWidth = 10;
                 this.OpponentBoard.Columns.Add(textColumn);
             }
 
