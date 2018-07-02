@@ -16,22 +16,12 @@ namespace SAE
 
         public Game()
         {
-            this.Settings = Settings.LoadSettings();
-            this.Player = new Player();
-            this.Ai = new AIOpponent();
-            //this.PlayerGameBoard = new GameBoard(this.Settings.BoardSize)
+            this.Settings = Settings.LoadSettings();                      
+            this.AiGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>(), null);
+            this.Ai = new AIOpponent(this.AiGameBoard, this.AiGameBoard.Ships, this.Settings.Difficulty);
+            this.PlayerGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>(), null);
+            this.Player = new Player(this.PlayerGameBoard, this.PlayerGameBoard.Ships);            
         }
-
-        //private List<Ships> generatePlayerShips()
-        //{
-        //    for(int x = 1; x < this.Settings.BoardSize; x++)
-        //    {
-        //        for (int y = 1; y < this.Settings.BoardSize; y++)
-        //        {
-
-        //        }
-        //    }
-        //}
 
         internal Settings Settings { get => settings; set => settings = value; }
         internal GameBoard PlayerGameBoard { get => playerGameBoard; set => playerGameBoard = value; }

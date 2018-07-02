@@ -91,7 +91,6 @@ namespace SAE
         {
             DependencyObject dep = (DependencyObject)e.OriginalSource;
 
-            // iteratively traverse the visual tree
             while ((dep != null) &&
             !(dep is DataGridCell) && !(dep is DataGridColumnHeader))
     {
@@ -102,7 +101,6 @@ namespace SAE
             {
                 DataGridCell cell = dep as DataGridCell;
 
-                // navigate further up the tree
                 while ((dep != null) && !(dep is DataGridRow))
                 {
                     dep = VisualTreeHelper.GetParent(dep);
@@ -112,7 +110,7 @@ namespace SAE
                 
             }
 
-            int index = FindRowIndex((DataGridRow)dep);
+            int row = FindRowIndex((DataGridRow)dep);
             int column = ((DataGridCell)sender).Column.DisplayIndex;
         }
 
