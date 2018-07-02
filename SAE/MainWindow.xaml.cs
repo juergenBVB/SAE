@@ -56,15 +56,6 @@ namespace SAE
             this.generateGrids();
         }
 
-        private void Test_Click(object sender, RoutedEventArgs e)
-        {
-            this.MainViewModel.MainGame.Player.HitLog.Insert(0, new Square(1, 1));
-            this.MainViewModel.MainGame.Player.HitLog.Insert(0, new Square(1, 2));
-            this.MainViewModel.MainGame.Player.HitLog.Insert(0, new Square(1, 3));
-            this.MainViewModel.MainGame.Player.HitLog.Insert(0, new Square(1, 4));
-            this.MainViewModel.MainGame.Player.HitLog.Insert(0, new ShipPart(1, 4));
-        }
-
         private void generateGrids()
         {
             //generate opponent grid    
