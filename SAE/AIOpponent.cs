@@ -38,7 +38,7 @@ namespace SAE
 
             foreach (Square sq in hitLog)
             {
-                if (sq.IsShipPart())
+                if (sq is ShipPart)
                 {
                     sp = new ShipPart(sq);
 

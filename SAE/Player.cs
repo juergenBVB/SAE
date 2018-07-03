@@ -52,18 +52,16 @@ namespace SAE
         public Boolean TargetSquare(Square sq)
         {
             // if square isnt a legal target, do nothing and return false
-            if (Board.Squares.Contains(sq) && !sq.IsHit)
+            if (Board.Squares.Any(x => x == sq) && !sq.IsHit)
             {
                 hitLog.Add(sq);
                 Board.Squares.Find(x => x == sq).IsHit = true;
 
                 // if square is actually a shippart, destroy it
-                if (sq.IsShipPart())
+                if (sq is ShipPart)
                 {
-                    ShipPart sp = new ShipPart(Board.Squares.Find(x => x == sq));
-                    sp.Destroy();
-                    Board.Squares[Board.Squares.FindIndex(x => x == sq)] = sp;
-                    hitLog[hitLog.Count - 1] = sp;
+                    (sq as ShipPart).Destroy();
+                    hitLog[hitLog.Count - 1] = sq as ShipPart;
                     return true;
                 }
             }
@@ -74,7 +72,7 @@ namespace SAE
         {
             foreach (Square sq in Board.Squares)
             {
-                if (sq.IsLegal && sq.IsShipPart())
+                if (sq is ShipPart)
                 {
                     return true;
                 }
