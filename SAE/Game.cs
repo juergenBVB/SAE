@@ -43,7 +43,7 @@ namespace SAE
             switch (turn)
             {
                 case 0:
-                    hit = this.player.TargetSquare(new Square(x, y));
+                    hit = this.player.TargetSquare(this.player.Board.GetSquareFromCoordinates(x, y));
                     turn = 1;
                     break;
                 case 1:

@@ -82,5 +82,18 @@ namespace SAE
             tempY = sq.PositionY * this.size;
             return tempY + sq.PositionX;
         }
+
+        public Square GetSquareFromCoordinates(int x, int y)
+        {
+            Square tempSquare = new Square(x, y);
+            foreach (Square sq in this.squares)
+            {
+                if (sq == tempSquare)
+                {
+                    tempSquare = sq;
+                }
+            }
+            return tempSquare;
+        }
     }
 }

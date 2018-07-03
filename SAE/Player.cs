@@ -88,7 +88,9 @@ namespace SAE
             Square sq;
             if (isTarget)
             {
-                sq = GetLegalSquaresOpp()[rand.Next(legalSquares.Count - 1)];
+                List<Square> squareList;
+                squareList = GetLegalSquaresOpp();
+                sq = squareList[rand.Next(squareList.Count - 1)];
             }
             else
                 sq = legalSquares[rand.Next(legalSquares.Count - 1)];
@@ -127,7 +129,7 @@ namespace SAE
                     }
                     else
                     {
-                        sp = (ShipPart)GetRandomLegalSquare(false);
+                        sp = new ShipPart(GetRandomLegalSquare(false));
                     }
                 }
 
