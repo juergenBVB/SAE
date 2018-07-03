@@ -117,7 +117,7 @@ namespace SAE
                 {
                     // try finding a random direction the ship would fit in
                     int tries = 0;
-                    while (!IsLegalDirection(sp, shipLength, d) && tries < 10)
+                    while (!IsLegalDirection(sp, shipLength, d) && tries < 20)
                     {
                         d = (Direction)rand.Next(3);
                         tries++;
