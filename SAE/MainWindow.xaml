@@ -16,7 +16,7 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label FontSize="16" Margin="15 0 0 0">Opponents board</Label>
-                    <DataGrid Cursor="Cross" Name="OpponentBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" ColumnWidth="10" RowHeight="10">
+                    <DataGrid Cursor="Cross" Name="OpponentBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" ColumnWidth="10" RowHeight="10" IsReadOnly="True">
                         <DataGrid.Resources>
                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White"/>
                         </DataGrid.Resources>
@@ -37,7 +37,10 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label FontSize="16" Margin="15 0 0 0">Player board</Label>
-                    <DataGrid Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" RowHeight="10">
+                    <DataGrid Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" RowHeight="10" IsReadOnly="True">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White"/>
+                        </DataGrid.Resources>
                         <Style TargetType="DataGridCell">
                             <Setter Property="Background" Value="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged}"></Setter>
                         </Style>
