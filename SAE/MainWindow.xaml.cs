@@ -55,7 +55,20 @@ namespace SAE
             this.OpponentHitlog.ItemsSource = this.MainViewModel.MainGame.Ai.HitLog;
 
             this.generateGrids();
+            this.showPlayerShips();
             this.MainViewModel.StartTimer();
+        }
+
+        private void showPlayerShips()
+        {
+            List<Ship> playerShips = this.MainViewModel.MainGame.PlayerGameBoard.Ships;
+            foreach (var ship in playerShips)
+            {
+                foreach (var shipPart in ship.ShipParts)
+                {
+                   // DataGridRow row = (DataGridRow)this.PlayerBoard.Items[shipPart.PositionX];
+                }
+            }
         }
 
         private void generateGrids()
@@ -63,21 +76,23 @@ namespace SAE
             this.PlayerBoard.Items.Clear();
             this.PlayerBoard.Columns.Clear();
             this.OpponentBoard.Items.Clear();
-            this.OpponentBoard.Columns.Clear(); 
-            for (int i = 1; i < this.MainViewModel.MainGame.Settings.BoardSize; i++)
+            this.OpponentBoard.Columns.Clear();
+
+            for (int i = 0; i < this.MainViewModel.MainGame.Settings.BoardSize; i++)
             {
                 DataGridTextColumn textColumn = new DataGridTextColumn();
                 textColumn.MaxWidth = 10;
                 this.PlayerBoard.Columns.Add(textColumn);
+
                 textColumn = new DataGridTextColumn();
                 textColumn.MaxWidth = 10;
                 this.OpponentBoard.Columns.Add(textColumn);
             }
 
-            for (int j = 1; j < this.MainViewModel.MainGame.Settings.BoardSize; j++)
+            for (int j = 0; j < this.MainViewModel.MainGame.Settings.BoardSize; j++)
             {
-                this.PlayerBoard.Items.Add(new object[] { });
-                this.OpponentBoard.Items.Add(new object[] { });
+                this.PlayerBoard.Items.Add(new object[] {});
+                this.OpponentBoard.Items.Add(new object[] {});
             }
         }
 
@@ -110,8 +125,17 @@ namespace SAE
                 
             }
 
+            DataGridCell clickedCell = (DataGridCell)sender;
+
             int rowIndex = FindRowIndex((DataGridRow)dep);
-            int columnIndex = ((DataGridCell)sender).Column.DisplayIndex;
+            int columnIndex = clickedCell.Column.DisplayIndex;
+
+            Boolean hit = this.MainViewModel.MainGame.ExecuteMove(columnIndex, rowIndex);
+
+            Color enemyColor = this.MainViewModel.MainGame.Settings.EnemyColor;
+            clickedCell.Background = hit ? new SolidColorBrush(enemyColor) : new SolidColorBrush(Colors.Gray);
+
+            this.MainViewModel.MainGame.ExecuteMove();
         }
 
         private int FindRowIndex(DataGridRow row)
