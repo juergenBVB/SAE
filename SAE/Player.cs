@@ -62,7 +62,7 @@ namespace SAE
             // if square isnt a legal target, do nothing and return false
             if (Board.Squares.Contains(sq) && !sq.IsHit)
             {
-                hitLog.Insert(0, sq);
+                hitLog.Add(sq);
                 Board.Squares.Find(x => x == sq).IsHit = true;
 
                 // if square is actually a shippart, destroy it
@@ -71,7 +71,7 @@ namespace SAE
                     ShipPart sp = new ShipPart(Board.Squares.Find(x => x == sq));
                     sp.Destroy();
                     Board.Squares[Board.Squares.FindIndex(x => x == sq)] = sp;
-                    hitLog[0] = sp;
+                    hitLog[hitLog.Count - 1] = sp;
                     return true;
                 }
             }
