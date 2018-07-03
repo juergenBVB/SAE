@@ -103,7 +103,7 @@ namespace SAE
             int shipLength = 0;
             Direction d;
 
-            foreach (Ship s in Ships)
+            foreach (Ship s in this.board.Ships)
             {
 
                 sp = new ShipPart(GetRandomLegalSquare());
