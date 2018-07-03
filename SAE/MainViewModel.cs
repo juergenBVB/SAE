@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace SAE
 {
@@ -19,11 +21,7 @@ namespace SAE
 
         public MainViewModel()
         {
-            this.timerStart = DateTime.Now;
-            Timer timer = new Timer();
-            timer.Elapsed += new ElapsedEventHandler(this.OnTimerTick);
-            timer.Interval = 1000;
-            timer.Enabled = true;            
+                   
         }
 
         public bool StartScreenVisible
@@ -69,6 +67,15 @@ namespace SAE
             }
         }
 
+        public void StartTimer()
+        {
+            this.timerStart = DateTime.Now;
+            DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Send);
+            timer.Tick += new EventHandler(this.OnTimerTick);
+            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            timer.Start();
+        }
+
         internal Game MainGame { get => mainGame; set => mainGame = value; }        
 
         private void NotifyPropertyChanged(string info)
@@ -81,13 +88,12 @@ namespace SAE
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnTimerTick(object source, ElapsedEventArgs e)
+        private void OnTimerTick(object source, EventArgs e)
         {
             DateTime endTime = DateTime.Now;
 
             TimeSpan span = endTime.Subtract(this.timerStart);
-            this.TimerValue = span.ToString();
-           
+            this.TimerValue = span.ToString(@"hh\:mm\:ss");                       
         }
     }
 }
