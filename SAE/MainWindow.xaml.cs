@@ -55,6 +55,7 @@ namespace SAE
             this.OpponentHitlog.ItemsSource = this.MainViewModel.MainGame.Ai.HitLog;
 
             this.generateGrids();
+            this.MainViewModel.StartTimer();
         }
 
         private void generateGrids()
