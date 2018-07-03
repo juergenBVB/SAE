@@ -25,6 +25,7 @@ namespace SAE
             this.PositionX = sq.PositionX;
             this.PositionY = sq.PositionY;
             this.IsHit = sq.IsHit;
+            this.destroyed = sq.IsHit;
             this.IsLegal = sq.IsLegal;
         }
 

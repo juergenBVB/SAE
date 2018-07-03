@@ -68,9 +68,10 @@ namespace SAE
                 // if square is actually a shippart, destroy it
                 if (sq.IsShipPart())
                 {
-                    ShipPart sp = Board.Squares.Find(x => x == sq) as ShipPart;
+                    ShipPart sp = new ShipPart(Board.Squares.Find(x => x == sq));
                     sp.Destroy();
                     Board.Squares[Board.Squares.FindIndex(x => x == sq)] = sp;
+                    hitLog[0] = sp;
                     return true;
                 }
             }

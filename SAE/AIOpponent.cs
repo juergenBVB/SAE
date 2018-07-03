@@ -9,6 +9,7 @@ namespace SAE
     class AIOpponent : Player
     {
         private AIDifficulty difficulty;
+        private Direction TargetDirection = Direction.NONE;
 
         public AIOpponent() : base()
         {
@@ -40,37 +41,49 @@ namespace SAE
             {
                 if (sq.IsShipPart())
                 {
-                    sp = (ShipPart)sq;
+                    sp = new ShipPart(sq);
 
-                    if (!sp.Destroyed)
+                    foreach (Ship ship in Board.Ships)
                     {
-                        foreach (Ship ship in Board.Ships)
+                        for (int i = 0; i < 4; i++)
                         {
-                            for (int i = 0; i < 4; i++)
-                            {
-                                shipFits = IsLegalDirection(sp, ship.GetShipLength(), (Direction)i, true);
-                                if (shipFits)
-                                {
-                                    d = (Direction)i;
-                                    targetShip = ship;
-                                    break;
-                                }
-                            }
+                            shipFits = IsLegalDirection(sp, ship.GetShipLength(), (Direction)i, true);
                             if (shipFits)
+                            {
+                                d = (Direction)i;
+                                targetShip = ship;
                                 break;
+                            }
                         }
-
                         if (shipFits)
                             break;
                     }
+
+                    if (shipFits)
+                        break;
+
                 }
             }
 
             if (shipFits)
             {
-                TargetSquare(FindNextSquareInDirection(sp, d));
-                if (targetShip.isDestroyed())
-                    ships.Remove(targetShip);
+                if (TargetDirection != Direction.NONE)
+                {
+                    d = TargetDirection;
+                }
+                if(TargetSquare(FindNextSquareInDirection(sp, d)))
+                {
+                    TargetDirection = d;
+                    if (targetShip.isDestroyed())
+                    {
+                        ships.Remove(targetShip);
+                        TargetDirection = Direction.NONE;
+                    }            
+                }
+                else
+                {
+                    TargetDirection = Direction.NONE;
+                }
             }
         }
 

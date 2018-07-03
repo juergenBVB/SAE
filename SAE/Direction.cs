@@ -8,6 +8,7 @@ namespace SAE
 {
     enum Direction
     {
+        NONE = -1,
         UP = 0,
         DOWN,
         LEFT,
