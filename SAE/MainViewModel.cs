@@ -70,7 +70,7 @@ namespace SAE
         public void StartTimer()
         {
             this.timerStart = DateTime.Now;
-            DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+            DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Send);
             timer.Tick += new EventHandler(this.OnTimerTick);
             timer.Interval = TimeSpan.FromMilliseconds(1000);
             timer.Start();
@@ -93,10 +93,7 @@ namespace SAE
             DateTime endTime = DateTime.Now;
 
             TimeSpan span = endTime.Subtract(this.timerStart);
-            Application.Current.Dispatcher.BeginInvoke(
-              DispatcherPriority.Background,
-              new Action(() => this.TimerValue = span.ToString(@"hh\:mm\:ss")));
-                       
+            this.TimerValue = span.ToString(@"hh\:mm\:ss");                       
         }
     }
 }
