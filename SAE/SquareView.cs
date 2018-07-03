@@ -8,11 +8,11 @@ using System.Windows.Media;
 
 namespace SAE
 {
-    class SquareView : INotifyPropertyChanged
+    class SquareView : Square, INotifyPropertyChanged
     {
         private Color backgroundColor;
 
-        public SquareView()
+        public SquareView(int x, int y) : base(x, y)
         {
             this.BackgroundColor = Colors.White;
         }

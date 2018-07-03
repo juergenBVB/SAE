@@ -4,7 +4,7 @@
         Title="Ships'n'Guns" Height="1000" Width="800">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
-    </Window.Resources>
+    </Window.Resources>    
     <Grid>
         <StackPanel Visibility="{Binding StartScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}" Width="Auto" Height="Auto">        
             <Label Margin="10" FontSize="48" HorizontalContentAlignment="Center">Battleships</Label>
@@ -23,7 +23,7 @@
                         <DataGrid.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <EventSetter Event="PreviewMouseDown" Handler="attack_Click"/>
-                            </Style>
+                            </Style>                            
                         </DataGrid.CellStyle>
                     </DataGrid>
                 </StackPanel>
@@ -37,7 +37,10 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label FontSize="16" Margin="15 0 0 0">Player board</Label>
-                    <DataGrid Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" RowHeight="10">                        
+                    <DataGrid Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" RowHeight="10">
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged}"></Setter>
+                        </Style>
                     </DataGrid>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">

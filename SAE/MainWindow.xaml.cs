@@ -34,7 +34,10 @@ namespace SAE
             ((INotifyCollectionChanged)this.OpponentHitlog.Items).CollectionChanged += OpponentHitLog_CollectionChanged;
         }
 
-        public MainViewModel MainViewModel { get => mainViewModel; set => mainViewModel = value; }
+        public MainViewModel MainViewModel {
+            get { return mainViewModel; }
+            set { mainViewModel = value; }
+        }
 
         private void OpenSettings_Click(object sender, RoutedEventArgs e)
         {
@@ -81,21 +84,33 @@ namespace SAE
             this.OpponentBoard.Items.Clear();
             this.OpponentBoard.Columns.Clear();
 
-            for (int i = 0; i < this.MainViewModel.MainGame.Settings.BoardSize; i++)
+            int boardSize = this.MainViewModel.MainGame.Settings.BoardSize;
+
+            //add columns
+            for (int i = 0; i < boardSize; i++)
             {
                 DataGridTextColumn textColumn = new DataGridTextColumn();
                 textColumn.MaxWidth = 10;
                 this.PlayerBoard.Columns.Add(textColumn);
-
                 textColumn = new DataGridTextColumn();
                 textColumn.MaxWidth = 10;
                 this.OpponentBoard.Columns.Add(textColumn);
             }
 
-            for (int j = 0; j < this.MainViewModel.MainGame.Settings.BoardSize; j++)
+            foreach (var square in this.MainViewModel.MainGame.Player.Board.Squares)
             {
-                this.PlayerBoard.Items.Add(new object[] {});
-                this.OpponentBoard.Items.Add(new object[] {});
+                this.MainViewModel.SquareViewList.Add(new SquareView(square.PositionX, square.PositionY));
+            }
+
+            for (int j = 0; j < boardSize; j++)
+            {
+                SquareView[] tempArray = new SquareView[boardSize];
+                for (int i = 0; i < boardSize; i++)
+                {
+                    tempArray[i] = this.MainViewModel.SquareViewList[GameBoard.GetIndexOfCoordinates(j, i, boardSize)];
+                }
+                this.PlayerBoard.Items.Add(tempArray);
+                this.OpponentBoard.Items.Add(tempArray);
             }
         }
 
@@ -133,12 +148,16 @@ namespace SAE
             int rowIndex = FindRowIndex((DataGridRow)dep);
             int columnIndex = clickedCell.Column.DisplayIndex;
 
-            Boolean hit = this.MainViewModel.MainGame.ExecuteMove(columnIndex, rowIndex);
+            Boolean playerhit = this.MainViewModel.MainGame.ExecuteMove(columnIndex, rowIndex);
 
             Color enemyColor = this.MainViewModel.MainGame.Settings.EnemyColor;
-            clickedCell.Background = hit ? new SolidColorBrush(enemyColor) : new SolidColorBrush(Colors.Gray);
+            clickedCell.Background = playerhit ? new SolidColorBrush(enemyColor) : new SolidColorBrush(Colors.Gray);
 
-            this.MainViewModel.MainGame.ExecuteMove();
+            Boolean aiHit = this.MainViewModel.MainGame.ExecuteMove();
+            Square hitSquare = this.MainViewModel.MainGame.Ai.HitLog.Last();
+            this.MainViewModel.SquareViewList[GameBoard.GetIndexOfCoordinates(
+                hitSquare.PositionX, hitSquare.PositionY, this.MainViewModel.MainGame.Settings.BoardSize)].BackgroundColor = aiHit ? Colors.Red : Colors.Gray;
+
         }
 
         private int FindRowIndex(DataGridRow row)

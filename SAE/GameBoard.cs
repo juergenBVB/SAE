@@ -83,6 +83,13 @@ namespace SAE
             return tempY + sq.PositionX;
         }
 
+        public static int GetIndexOfCoordinates(int x, int y, int size)
+        {
+            int tempY;
+            tempY = y * size;
+            return tempY + x;
+        }
+
         public Square GetSquareFromCoordinates(int x, int y)
         {
             Square tempSquare = new Square(x, y);

@@ -16,11 +16,11 @@ namespace SAE
         private Random rand;
         private int turn;
 
-        internal Settings Settings { get => settings; set => settings = value; }
-        internal GameBoard PlayerGameBoard { get => playerGameBoard; set => playerGameBoard = value; }
-        internal GameBoard AiGameBoard { get => aiGameBoard; set => aiGameBoard = value; }
-        internal AIOpponent Ai { get => ai; set => ai = value; }
-        internal Player Player { get => player; set => player = value; }
+        internal Settings Settings {  get { return settings; } set { settings = value; } }
+        internal GameBoard PlayerGameBoard { get { return playerGameBoard; } set { playerGameBoard = value; } }
+        internal GameBoard AiGameBoard { get { return aiGameBoard; } set { aiGameBoard = value; } }
+        internal AIOpponent Ai { get { return ai; } set { ai = value; } }
+        internal Player Player { get { return player; } set { player = value; } }
 
         public Game()
         {

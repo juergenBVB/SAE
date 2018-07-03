@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,11 @@ namespace SAE
         private string timerValue;
         private DateTime timerStart;
         private Game mainGame;
+        private ObservableCollection<SquareView> squareViewList;
 
         public MainViewModel()
         {
-                   
+            this.SquareViewList = new ObservableCollection<SquareView>();                   
         }
 
         public bool StartScreenVisible
@@ -76,7 +78,8 @@ namespace SAE
             timer.Start();
         }
 
-        internal Game MainGame { get => mainGame; set => mainGame = value; }        
+        internal Game MainGame { get => mainGame; set => mainGame = value; }
+        internal ObservableCollection<SquareView> SquareViewList { get => squareViewList; set => squareViewList = value; }
 
         private void NotifyPropertyChanged(string info)
         {
