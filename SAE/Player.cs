@@ -10,16 +10,9 @@ namespace SAE
     class Player
     {
         protected ObservableCollection<Square> hitLog;
-        protected List<Ship> ships;
         protected List<Square> legalSquares;
         protected GameBoard board;
         protected Random rand;
-
-        internal List<Ship> Ships
-        {
-            get { return ships; }
-            set { ships = value; }
-        }
 
         internal ObservableCollection<Square> HitLog
         {
@@ -33,11 +26,10 @@ namespace SAE
         {
             this.HitLog = new ObservableCollection<Square>();
         }
-        public Player(GameBoard board, List<Ship> ships)
+        public Player(GameBoard board)
         {
             this.HitLog = new ObservableCollection<Square>();
             this.Board = board;
-            this.ships = ships;
             rand = new Random(DateTime.Now.Millisecond);
             this.legalSquares = GetLegalSquaresOpp();
         }

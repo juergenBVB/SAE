@@ -13,24 +13,57 @@ namespace SAE
         private GameBoard aiGameBoard;
         private AIOpponent ai;
         private Player player;
-
-        public Game()
-        {
-            this.Settings = Settings.LoadSettings();                      
-            this.AiGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>());
-            this.Ai = new AIOpponent(this.AiGameBoard, this.AiGameBoard.Ships, this.Settings.Difficulty);
-            this.PlayerGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>());
-            this.Player = new Player(this.PlayerGameBoard, this.PlayerGameBoard.Ships);
-            this.AiGameBoard.Ships = this.Player.PlaceShips();
-            this.PlayerGameBoard.Ships = this.Ai.PlaceShips();
-            this.Player.Board.AddShipsToBoard();
-            this.Ai.Board.AddShipsToBoard();
-        }
+        private Random rand;
+        private int turn;
 
         internal Settings Settings { get => settings; set => settings = value; }
         internal GameBoard PlayerGameBoard { get => playerGameBoard; set => playerGameBoard = value; }
         internal GameBoard AiGameBoard { get => aiGameBoard; set => aiGameBoard = value; }
         internal AIOpponent Ai { get => ai; set => ai = value; }
         internal Player Player { get => player; set => player = value; }
+
+        public Game()
+        {
+            this.Settings = Settings.LoadSettings();
+            this.AiGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>());
+            this.Ai = new AIOpponent(this.AiGameBoard, this.Settings.Difficulty);
+            this.PlayerGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>());
+            this.Player = new Player(this.PlayerGameBoard);
+            this.AiGameBoard.Ships = this.Player.PlaceShips();
+            this.PlayerGameBoard.Ships = this.Ai.PlaceShips();
+            this.Player.Board.AddShipsToBoard();
+            this.Ai.Board.AddShipsToBoard();
+            this.rand = new Random(DateTime.Now.Millisecond);
+            this.turn = this.rand.Next(1);
+        }
+
+        public Boolean ExecuteMove(int x = -1, int y = -1)
+        {
+            Boolean hit = false;
+            switch (turn)
+            {
+                case 0:
+                    hit = this.player.TargetSquare(new Square(x, y));
+                    turn = 1;
+                    break;
+                case 1:
+                   hit = this.ai.MakeMove().IsShipPart();
+                    turn = 0;
+                    break;
+                default:
+                    break;
+            }
+            return hit;
+        }
+
+        public Boolean IsGameOver()
+        {
+            return this.player.Board.Ships.Count == 0 || this.ai.Board.Ships.Count == 0;
+        }
+
+        public Boolean CalculateWinner()
+        {
+            return this.player.Board.Ships.Count == 0;
+        }
     }
 }

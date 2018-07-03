@@ -16,11 +16,10 @@ namespace SAE
 
         }
 
-        public AIOpponent(GameBoard board, List<Ship> ships, AIDifficulty diff) : base(board, ships)
+        public AIOpponent(GameBoard board, AIDifficulty diff) : base(board)
         {
             this.difficulty = diff;
             legalSquares = GetLegalSquaresOpp();
-            PlaceShips();
         }
 
         public Square TargetRandomSquare()
@@ -30,7 +29,7 @@ namespace SAE
             return sq;
         }
 
-        private void TargetShip()
+        private Square TargetShip()
         {
             ShipPart sp = null;
             Boolean shipFits = false;
@@ -71,20 +70,23 @@ namespace SAE
                 {
                     d = TargetDirection;
                 }
-                if(TargetSquare(FindNextSquareInDirection(sp, d)))
+                if (TargetSquare(FindNextSquareInDirection(sp, d)))
                 {
                     TargetDirection = d;
                     if (targetShip.isDestroyed())
                     {
-                        ships.Remove(targetShip);
+                        Board.Ships.Remove(targetShip);
                         TargetDirection = Direction.NONE;
-                    }            
+                    }
                 }
                 else
                 {
                     TargetDirection = Direction.NONE;
                 }
+                return FindNextSquareInDirection(sp, d);
             }
+            else
+                return null;
         }
 
         private Square FindNextSquareInDirection(Square sq, Direction d)
@@ -111,16 +113,22 @@ namespace SAE
             return tempSquare;
         }
 
-        public void MakeMove()
+        public Square MakeMove()
         {
+            Square sq = null;
             if (!ShipFound() || difficulty == AIDifficulty.Easy)
             {
-                TargetRandomSquare();
+                sq = TargetRandomSquare();
             }
             else if (!(difficulty == AIDifficulty.Easy))
             {
-                TargetShip();
+                do
+                {
+                    sq = TargetShip();
+                }
+                while (sq == null);
             }
+            return sq;
         }
     }
 }
