@@ -61,7 +61,6 @@ namespace SAE
                 if (sq is ShipPart)
                 {
                     (sq as ShipPart).Destroy();
-                    hitLog[hitLog.Count - 1] = sq as ShipPart;
                     return true;
                 }
             }

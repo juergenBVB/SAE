@@ -90,10 +90,10 @@ namespace SAE
             {
                 if (sq == tempSquare)
                 {
-                    tempSquare = sq;
+                    return sq;
                 }
             }
-            return tempSquare;
+            return null;
         }
     }
 }

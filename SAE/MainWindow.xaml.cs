@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,8 @@ namespace SAE
             this.MainViewModel = new MainViewModel();
             this.DataContext = this.MainViewModel;
             this.MainViewModel.StartScreenVisible = true;
+            ((INotifyCollectionChanged)this.PlayerHitlog.Items).CollectionChanged += PlayerHitLog_CollectionChanged;
+            ((INotifyCollectionChanged)this.OpponentHitlog.Items).CollectionChanged += OpponentHitLog_CollectionChanged;
         }
 
         public MainViewModel MainViewModel { get => mainViewModel; set => mainViewModel = value; }
@@ -148,6 +151,24 @@ namespace SAE
                 IndexFromContainer(row);
 
             return index;
+        }
+
+        private void PlayerHitLog_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                // scroll the new item into view   
+                this.PlayerHitlog.ScrollIntoView(e.NewItems[0]);
+            }
+        }
+
+        private void OpponentHitLog_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                // scroll the new item into view   
+                this.OpponentHitlog.ScrollIntoView(e.NewItems[0]);
+            }
         }
     }
 }
