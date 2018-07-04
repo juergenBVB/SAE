@@ -58,12 +58,37 @@ namespace SAE
 
         public Boolean IsGameOver()
         {
-            return this.player.Board.Ships.Count == 0 || this.ai.Board.Ships.Count == 0;
+            Boolean remainingPlayer = true;
+            Boolean remainingAi = true;
+            foreach (Square sq in this.player.Board.Squares) {
+                if (sq.IsShipPart() && !((ShipPart)sq).Destroyed)
+                {
+                    remainingPlayer = false;
+                }
+            }
+
+            foreach (Square sq in this.ai.Board.Squares)
+            {
+                if (sq.IsShipPart() && !((ShipPart)sq).Destroyed)
+                {
+                    remainingAi = false;
+                }
+            }
+
+            return (remainingPlayer || remainingAi);
         }
 
         public Boolean CalculateWinner()
         {
-            return this.player.Board.Ships.Count == 0;
+            foreach (Square sq in this.player.Board.Squares)
+            {
+                if (sq.IsShipPart() && !((ShipPart)sq).Destroyed)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
