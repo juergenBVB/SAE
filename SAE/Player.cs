@@ -42,7 +42,7 @@ namespace SAE
         protected List<Square> GetLegalSquaresOpp()
         {
             List<Square> sqList = new List<Square>();
-            foreach (Square sq in Board.Squares)
+            foreach (Square sq in this.board.Squares)
             {
                 if (!sq.IsHit)
                 {
@@ -62,7 +62,7 @@ namespace SAE
                 this.board.Squares.Find(x => x == sq).IsHit = true;
 
                 // if square is actually a shippart, destroy it
-                if (sq is ShipPart)
+                if (sq.IsShipPart())
                 {
                     (sq as ShipPart).Destroy();
                     return true;
@@ -95,11 +95,11 @@ namespace SAE
             if (isTarget)
             {
                 List<Square> squareList;
-                squareList = GetLegalSquaresOpp();
-                sq = squareList[rand.Next(squareList.Count - 1)];
+                squareList = new List<Square>(GetLegalSquaresOpp());
+                sq = squareList[rand.Next(0, squareList.Count - 1)];
             }
             else
-                sq = legalSquares[rand.Next(legalSquares.Count - 1)];
+                sq = legalSquares[rand.Next(0, legalSquares.Count - 1)];
             return sq;
         }
 

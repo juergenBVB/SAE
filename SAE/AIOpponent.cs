@@ -44,18 +44,21 @@ namespace SAE
 
                     foreach (Ship ship in Board.Ships)
                     {
-                        for (int i = 0; i < 4; i++)
+                        if (!ship.isDestroyed())
                         {
-                            shipFits = IsLegalDirection(sp, ship.GetShipLength(), (Direction)i, true);
-                            if (shipFits)
+                            for (int i = 0; i < 4; i++)
                             {
-                                d = (Direction)i;
-                                targetShip = ship;
-                                break;
+                                shipFits = IsLegalDirection(sp, ship.GetShipLength(), (Direction)i, true);
+                                if (shipFits)
+                                {
+                                    d = (Direction)i;
+                                    targetShip = ship;
+                                    break;
+                                }
                             }
+                            if (shipFits)
+                                break;
                         }
-                        if (shipFits)
-                            break;
                     }
 
                     if (shipFits)
@@ -98,9 +101,7 @@ namespace SAE
             }
             else if (!(difficulty == AIDifficulty.Easy))
             {
-               
-                    sq = TargetShip();
-                
+                sq = TargetShip();
             }
             return sq;
         }

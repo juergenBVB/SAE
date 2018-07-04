@@ -78,30 +78,22 @@ namespace SAE
 
         private int GetIndexOfSquare(Square sq)
         {
-            if (sq.PositionY > 1)
+            if (sq.PositionY > 0)
             {
-                int tempY;
-                tempY = (sq.PositionY - 1) * this.size;
-                return tempY + sq.PositionX;
+                return sq.PositionX + sq.PositionY * this.size;
             }
             else
             {
-                return sq.PositionX + sq.PositionY * this.size;
+                return sq.PositionX;
             }
         }
 
         public static int GetIndexOfCoordinates(int x, int y, int size)
         {
-            if (y > 1)
-            {
-                int tempY;
-                tempY = (y - 1) * size;
-                return tempY + x;
-            }
-            else
-            {
+            if (y > 0)
                 return x + y * size;
-            }
+            else
+                return x;
         }
 
         public Square GetSquareFromCoordinates(int x, int y)
