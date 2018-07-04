@@ -57,6 +57,7 @@ namespace SAE
             this.MainViewModel.StartScreenVisible = false;
             this.MainViewModel.MainScreenVisible = true;
             this.MainViewModel.MainGame = new Game();
+            this.MainViewModel.TimerValue = "00:00:00";
             this.PlayerHitlog.ItemsSource = this.MainViewModel.MainGame.Player.HitLog;
             this.OpponentHitlog.ItemsSource = this.MainViewModel.MainGame.Ai.HitLog;
 
@@ -137,7 +138,9 @@ namespace SAE
                 {
                     this.MainViewModel.MainScreenVisible = false;
                     this.MainViewModel.EndScreenVisible = true;
-                    this.MainViewModel.EndScreenText = this.MainViewModel.MainGame.CalculateWinner() ? "Congratulations, you won!" : "Sorry, but you lost.";
+                    String playerName = this.MainViewModel.MainGame.Settings.PlayerName;
+                    this.MainViewModel.EndScreenText = this.MainViewModel.MainGame.CalculateWinner() ? String.Format("Congratulations {0}, you won!", playerName) : 
+                        String.Format("Sorry {0}, but you lost.", playerName);
                 }
 
                 this.OpponentBoard.SelectedItem = null;
