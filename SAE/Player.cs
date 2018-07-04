@@ -35,7 +35,7 @@ namespace SAE
             this.HitLog = new ObservableCollection<Square>();
             this.board = board;
             rand = new Random(DateTime.Now.Millisecond);
-            this.legalSquares = board.Squares;
+            this.legalSquares = new List<Square>(board.Squares);
         }
 
         // updates the list of all targetable squares
@@ -149,7 +149,7 @@ namespace SAE
         {
             foreach (Square sq in squares)
             {
-                Boolean leftsq, rightsq, upsq, downsq, upleftsq, downleftsq, uprightsq, downrighsq, issquare;
+                Boolean leftsq, rightsq, upsq, downsq, upleftsq, downleftsq, uprightsq, downrighsq;
                 leftsq = legalSquares.Any(x => x.PositionX == sq.PositionX - 1 && x.PositionY == sq.PositionY);
                 rightsq = legalSquares.Any(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY);
                 upsq = legalSquares.Any(x => x.PositionX == sq.PositionX && x.PositionY == sq.PositionY - 1);
@@ -160,35 +160,35 @@ namespace SAE
                 downrighsq = legalSquares.Any(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY + 1);
                 if (leftsq)
                 {
-                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.LEFT, legalSquares));
+                    legalSquares.Remove(legalSquares.Find(x => x == GetNextSquareInDirection(sq, Direction.LEFT, legalSquares)));
                 }
                 if (rightsq)
                 {
-                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.RIGHT, legalSquares));
+                    legalSquares.Remove(legalSquares.Find(x => x == GetNextSquareInDirection(sq, Direction.RIGHT, legalSquares)));
                 }
                 if (upsq)
                 {
-                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.UP, legalSquares));
+                    legalSquares.Remove(legalSquares.Find(x => x == GetNextSquareInDirection(sq, Direction.UP, legalSquares)));
                 }
                 if (downsq)
                 {
-                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.DOWN, legalSquares));
+                    legalSquares.Remove(legalSquares.Find(x => x == GetNextSquareInDirection(sq, Direction.DOWN, legalSquares)));
                 }
                 if (upleftsq)
                 {
-                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.UPLEFT, legalSquares));
+                    legalSquares.Remove(legalSquares.Find(x => x == GetNextSquareInDirection(sq, Direction.UPLEFT, legalSquares)));
                 }
                 if (downleftsq)
                 {
-                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.DOWNLEFT, legalSquares));
+                    legalSquares.Remove(legalSquares.Find(x => x == GetNextSquareInDirection(sq, Direction.DOWNLEFT, legalSquares)));
                 }
                 if (uprightsq)
                 {
-                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.UPRIGHT, legalSquares));
+                    legalSquares.Remove(legalSquares.Find(x => x == GetNextSquareInDirection(sq, Direction.UPRIGHT, legalSquares)));
                 }
                 if (downrighsq)
                 {
-                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.DOWNRIGHT, legalSquares));
+                    legalSquares.Remove(legalSquares.Find(x => x == GetNextSquareInDirection(sq, Direction.DOWNRIGHT, legalSquares)));
                 }
                 legalSquares.Remove(sq);
             }
@@ -228,7 +228,7 @@ namespace SAE
                 default:
                     break;
             }
-            return sq;
+            return tempSquare;
         }
 
         protected Boolean IsLegalDirection(Square sq, int shipLength, Direction d, Boolean Opp = false)
@@ -241,7 +241,7 @@ namespace SAE
                 switch (d)
                 {
                     case Direction.UP:
-                        if (!legalSquares.Any(x => x.PositionX == X && x.PositionY == Y - 1))
+                        if (!Opp && !legalSquares.Any(x => x.PositionX == X && x.PositionY == Y - 1))
                             DirectionIsLegal = false;
                         else if (Opp && !GetLegalSquaresOpp().Any(x => x.PositionX == X && x.PositionY == Y - 1))
                             DirectionIsLegal = false;
@@ -249,7 +249,7 @@ namespace SAE
                             Y--;
                         break;
                     case Direction.DOWN:
-                        if (!legalSquares.Any(x => x.PositionX == X && x.PositionY == Y + 1))
+                        if (!Opp && !legalSquares.Any(x => x.PositionX == X && x.PositionY == Y + 1))
                             DirectionIsLegal = false;
                         else if (Opp && !GetLegalSquaresOpp().Any(x => x.PositionX == X && x.PositionY == Y + 1))
                             DirectionIsLegal = false;
@@ -257,7 +257,7 @@ namespace SAE
                             Y++;
                         break;
                     case Direction.LEFT:
-                        if (!legalSquares.Any(x => x.PositionX == X - 1 && x.PositionY == Y))
+                        if (!Opp && !legalSquares.Any(x => x.PositionX == X - 1 && x.PositionY == Y))
                             DirectionIsLegal = false;
                         else if (Opp && !GetLegalSquaresOpp().Any(x => x.PositionX == X - 1 && x.PositionY == Y))
                             DirectionIsLegal = false;
@@ -265,7 +265,7 @@ namespace SAE
                             X--;
                         break;
                     case Direction.RIGHT:
-                        if (!legalSquares.Any(x => x.PositionX == X + 1 && x.PositionY == Y))
+                        if (!Opp && !legalSquares.Any(x => x.PositionX == X + 1 && x.PositionY == Y))
                             DirectionIsLegal = false;
                         else if (Opp && !GetLegalSquaresOpp().Any(x => x.PositionX == X + 1 && x.PositionY == Y))
                             DirectionIsLegal = false;

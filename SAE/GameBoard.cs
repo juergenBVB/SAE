@@ -86,7 +86,7 @@ namespace SAE
         public static int GetIndexOfCoordinates(int x, int y, int size)
         {
             int tempY;
-            tempY = y * size;
+            tempY = (y - 1) * size;
             return tempY + x;
         }
 
