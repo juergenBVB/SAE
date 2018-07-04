@@ -10,14 +10,14 @@ namespace SAE
 {
     class SquareView : Square, INotifyPropertyChanged
     {
-        private Color backgroundColor;
+        private SolidColorBrush backgroundColor;
 
-        public SquareView(int x, int y) : base(x, y)
-        {
-            this.BackgroundColor = Colors.White;
+        public SquareView(int x, int y, SolidColorBrush color) : base(x, y)
+        {            
+            this.BackgroundColor = color;
         }
 
-        public Color BackgroundColor
+        public SolidColorBrush BackgroundColor
         {
             get { return backgroundColor; }
             set { backgroundColor = value; this.NotifyPropertyChanged("BackgroundColor"); }
@@ -29,6 +29,11 @@ namespace SAE
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
+
+        public override string ToString()
+        {
+            return "";
         }
     }
 }

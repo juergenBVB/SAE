@@ -16,16 +16,30 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label FontSize="16" Margin="15 0 0 0">Opponents board</Label>
-                    <DataGrid Cursor="Cross" Name="OpponentBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" ColumnWidth="10" RowHeight="10" IsReadOnly="True">
-                        <DataGrid.Resources>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White"/>
-                        </DataGrid.Resources>
-                        <DataGrid.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <EventSetter Event="PreviewMouseDown" Handler="attack_Click"/>
-                            </Style>                            
-                        </DataGrid.CellStyle>
-                    </DataGrid>
+                    <ListBox Name="OpponentBoard" Width="300" Height="300" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="Opponent_SelectionChanged">
+                        <ListBox.Resources>
+                            <Style TargetType="ListBoxItem">
+                                <Style.Resources>
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                                </Style.Resources>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                            </Style>
+                        </ListBox.Resources>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="BorderBrush" Value="Black" />
+                                <Setter Property="Background" Value="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged}" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="{Binding BoardSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <Label FontSize="16">Player recent hits</Label>
@@ -37,14 +51,31 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <Label FontSize="16" Margin="15 0 0 0">Player board</Label>
-                    <DataGrid Name="PlayerBoard" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top" HeadersVisibility="None" RowHeight="10" IsReadOnly="True">
-                        <DataGrid.Resources>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White"/>
-                        </DataGrid.Resources>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="Background" Value="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged}"></Setter>
-                        </Style>
-                    </DataGrid>
+                    <ListBox Name="PlayerBoard" Width="300" Height="300" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListBox.Resources>
+                            <Style TargetType="ListBoxItem">
+                                <Style.Resources>
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                                </Style.Resources>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                            </Style>
+                        </ListBox.Resources>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="BorderBrush" Value="Black" />
+                                <Setter Property="Background" Value="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged}" />
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="{Binding BoardSize, UpdateSourceTrigger=PropertyChanged}"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <Label FontSize="16">Opponent recent hits</Label>

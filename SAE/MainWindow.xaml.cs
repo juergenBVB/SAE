@@ -61,57 +61,37 @@ namespace SAE
             this.OpponentHitlog.ItemsSource = this.MainViewModel.MainGame.Ai.HitLog;
 
             this.generateGrids();
-            this.showPlayerShips();
             this.MainViewModel.StartTimer();
-        }
-
-        private void showPlayerShips()
-        {
-            List<Ship> playerShips = this.MainViewModel.MainGame.PlayerGameBoard.Ships;
-            foreach (var ship in playerShips)
-            {
-                foreach (var shipPart in ship.ShipParts)
-                {
-                   // DataGridRow row = (DataGridRow)this.PlayerBoard.Items[shipPart.PositionX];
-                }
-            }
         }
 
         private void generateGrids()
         {
-            this.PlayerBoard.Items.Clear();
-            this.PlayerBoard.Columns.Clear();
-            this.OpponentBoard.Items.Clear();
-            this.OpponentBoard.Columns.Clear();
-
             int boardSize = this.MainViewModel.MainGame.Settings.BoardSize;
 
-            //add columns
-            for (int i = 0; i < boardSize; i++)
-            {
-                DataGridTextColumn textColumn = new DataGridTextColumn();
-                textColumn.MaxWidth = 10;
-                this.PlayerBoard.Columns.Add(textColumn);
-                textColumn = new DataGridTextColumn();
-                textColumn.MaxWidth = 10;
-                this.OpponentBoard.Columns.Add(textColumn);
-            }
+            this.MainViewModel.PlayerSquareViewList.Clear();
+            this.MainViewModel.AISquareViewList.Clear();     
 
             foreach (var square in this.MainViewModel.MainGame.Player.Board.Squares)
             {
-                this.MainViewModel.SquareViewList.Add(new SquareView(square.PositionX, square.PositionY));
+                SolidColorBrush color = Brushes.White;
+                if (square.IsShipPart())
+                {
+                    color = new SolidColorBrush(this.MainViewModel.MainGame.Settings.PlayerColor);
+                }
+
+                this.MainViewModel.PlayerSquareViewList.Add(new SquareView(square.PositionX, square.PositionY, color));
             }
 
-            for (int j = 0; j < boardSize; j++)
+            foreach (var square in this.MainViewModel.MainGame.Ai.Board.Squares)
             {
-                SquareView[] tempArray = new SquareView[boardSize];
-                for (int i = 0; i < boardSize; i++)
-                {
-                    tempArray[i] = this.MainViewModel.SquareViewList[GameBoard.GetIndexOfCoordinates(j, i, boardSize)];
-                }
-                this.PlayerBoard.Items.Add(tempArray);
-                this.OpponentBoard.Items.Add(tempArray);
+                this.MainViewModel.AISquareViewList.Add(new SquareView(square.PositionX, square.PositionY, Brushes.White));
             }
+
+            this.MainViewModel.ColumnWidth = this.PlayerBoard.Width / boardSize;
+            this.MainViewModel.RowHeight = this.PlayerBoard.Height / boardSize;
+
+            this.OpponentBoard.ItemsSource = this.MainViewModel.AISquareViewList;
+            this.PlayerBoard.ItemsSource = this.MainViewModel.PlayerSquareViewList;               
         }
 
         private void QuitGame_Click(object sender, RoutedEventArgs e)
@@ -148,15 +128,7 @@ namespace SAE
             int rowIndex = FindRowIndex((DataGridRow)dep);
             int columnIndex = clickedCell.Column.DisplayIndex;
 
-            Boolean playerhit = this.MainViewModel.MainGame.ExecuteMove(columnIndex, rowIndex);
-
-            Color enemyColor = this.MainViewModel.MainGame.Settings.EnemyColor;
-            clickedCell.Background = playerhit ? new SolidColorBrush(enemyColor) : new SolidColorBrush(Colors.Gray);
-
-            Boolean aiHit = this.MainViewModel.MainGame.ExecuteMove();
-            Square hitSquare = this.MainViewModel.MainGame.Ai.HitLog.Last();
-            this.MainViewModel.SquareViewList[GameBoard.GetIndexOfCoordinates(
-                hitSquare.PositionX, hitSquare.PositionY, this.MainViewModel.MainGame.Settings.BoardSize)].BackgroundColor = aiHit ? Colors.Red : Colors.Gray;
+            
 
         }
 
@@ -188,6 +160,20 @@ namespace SAE
                 // scroll the new item into view   
                 this.OpponentHitlog.ScrollIntoView(e.NewItems[0]);
             }
+        }
+
+        private void Opponent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SquareView selected = ((SquareView)this.OpponentBoard.SelectedItem);
+            Boolean playerhit = this.MainViewModel.MainGame.ExecuteMove(selected.PositionX, selected.PositionY);
+
+            Color enemyColor = this.MainViewModel.MainGame.Settings.EnemyColor;
+            selected.BackgroundColor = playerhit ? new SolidColorBrush(enemyColor) : new SolidColorBrush(Colors.Gray);
+
+            Boolean aiHit = this.MainViewModel.MainGame.ExecuteMove();
+            Square hitSquare = this.MainViewModel.MainGame.Ai.HitLog.Last();
+            this.MainViewModel.PlayerSquareViewList[GameBoard.GetIndexOfCoordinates(
+                hitSquare.PositionX, hitSquare.PositionY, this.MainViewModel.MainGame.Settings.BoardSize)].BackgroundColor = aiHit ? Brushes.Red : Brushes.Gray;
         }
     }
 }

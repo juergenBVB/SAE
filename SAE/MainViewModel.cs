@@ -19,11 +19,16 @@ namespace SAE
         private string timerValue;
         private DateTime timerStart;
         private Game mainGame;
-        private ObservableCollection<SquareView> squareViewList;
+        private ObservableCollection<SquareView> playerSquareViewList;
+        private ObservableCollection<SquareView> aiSquareViewList;
+        private int boardSize;
+        private double columnWidth;
+        private double rowHeight;
 
         public MainViewModel()
         {
-            this.SquareViewList = new ObservableCollection<SquareView>();                   
+            this.PlayerSquareViewList = new ObservableCollection<SquareView>();
+            this.AISquareViewList = new ObservableCollection<SquareView>();
         }
 
         public bool StartScreenVisible
@@ -69,6 +74,39 @@ namespace SAE
             }
         }
 
+        public int BoardSize
+        {
+            get { return boardSize; }
+
+            set
+            {
+                boardSize = value;
+                NotifyPropertyChanged("BoardSize");
+            }
+        }
+
+        public double ColumnWidth
+        {
+            get { return columnWidth; }
+
+            set
+            {
+                columnWidth = value;
+                NotifyPropertyChanged("ColumnWidth");
+            }
+        }
+
+        public double RowHeight
+        {
+            get { return rowHeight; }
+
+            set
+            {
+                rowHeight = value;
+                NotifyPropertyChanged("RowHeight");
+            }
+        }
+
         public void StartTimer()
         {
             this.timerStart = DateTime.Now;
@@ -79,7 +117,8 @@ namespace SAE
         }
 
         internal Game MainGame { get => mainGame; set => mainGame = value; }
-        internal ObservableCollection<SquareView> SquareViewList { get => squareViewList; set => squareViewList = value; }
+        internal ObservableCollection<SquareView> PlayerSquareViewList { get => playerSquareViewList; set => playerSquareViewList = value; }
+        internal ObservableCollection<SquareView> AISquareViewList { get => aiSquareViewList; set => aiSquareViewList = value; }
 
         private void NotifyPropertyChanged(string info)
         {
