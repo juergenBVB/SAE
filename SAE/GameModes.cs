@@ -8,6 +8,7 @@ namespace SAE
 {
     enum GameModes
     {
-        Classic
+        Classic,
+        Survival
     }
 }
