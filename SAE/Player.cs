@@ -115,7 +115,7 @@ namespace SAE
             {
 
                 sp = new ShipPart(GetRandomLegalSquare());
-                shipLength = s.GetShipLength();
+                shipLength = s.GetInitialShipLength();
                 d = (Direction)rand.Next(3);
 
                 // try to find a direction that fits the length of the ship

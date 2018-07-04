@@ -11,6 +11,7 @@ namespace SAE
         private ShipTypes shipType;
         private List<ShipPart> shipParts;
         private Boolean destroyed = false;
+        private int length;
 
         public Boolean Destroyed
         {
@@ -29,6 +30,8 @@ namespace SAE
             get { return shipType; }
             set { shipType = value; }
         }
+
+        public int Length { get => length; set => length = value; }
 
         public Ship(ShipTypes st, List<ShipPart> parts)
         {
@@ -105,7 +108,7 @@ namespace SAE
             return tempList;
         }
 
-        public int GetShipLength()
+        public int GetInitialShipLength()
         {
             int length;
             switch (shipType)

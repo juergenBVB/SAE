@@ -48,11 +48,12 @@ namespace SAE
                         {
                             for (int i = 0; i < 4; i++)
                             {
-                                shipFits = IsLegalDirection(sp, ship.GetShipLength(), (Direction)i, true);
+                                shipFits = IsLegalDirection(sp, ship.GetInitialShipLength(), (Direction)i, true);
                                 if (shipFits)
                                 {
                                     d = (Direction)i;
                                     targetShip = ship;
+                                    ship.Length--;
                                     break;
                                 }
                             }
@@ -82,14 +83,25 @@ namespace SAE
                         TargetDirection = Direction.NONE;
                     }
                 }
-                else
-                {
-                    TargetDirection = Direction.NONE;
-                }
                 return GetNextSquareInDirection(sp, d, board.Squares);
+            }
+            else if (TargetDirection != Direction.NONE)
+            {
+                TargetDirection = InvertDirection(TargetDirection);
+
+                if (TargetSquare(GetNextSquareInDirection(sp, TargetDirection, board.Squares)))
+                {
+                    if (targetShip.isDestroyed())
+                    {
+                        Board.Ships.Remove(targetShip);
+                        TargetDirection = Direction.NONE;
+                    }
+                }
+                return GetNextSquareInDirection(sp, TargetDirection, board.Squares);
             }
             else
                 return null;
+
         }
 
         public Square MakeMove()
@@ -104,6 +116,23 @@ namespace SAE
                 sq = TargetShip();
             }
             return sq;
+        }
+
+        private Direction InvertDirection(Direction d)
+        {
+            switch (d)
+            {
+                case Direction.UP:
+                    return Direction.DOWN;
+                case Direction.DOWN:
+                    return Direction.UP;
+                case Direction.LEFT:
+                    return Direction.RIGHT;
+                case Direction.RIGHT:
+                    return Direction.LEFT;
+                default:
+                    return Direction.NONE;
+            }
         }
     }
 }
