@@ -29,8 +29,8 @@ namespace SAE
             this.Ai = new AIOpponent(this.AiGameBoard, this.Settings.Difficulty);
             this.PlayerGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>());
             this.Player = new Player(this.PlayerGameBoard);
-            this.AiGameBoard.Ships = this.Player.PlaceShips();
-            this.PlayerGameBoard.Ships = this.Ai.PlaceShips();
+            this.AiGameBoard.Ships = this.Ai.PlaceShips();
+            this.PlayerGameBoard.Ships = this.Player.PlaceShips();
             this.Player.Board.AddShipsToBoard();
             this.Ai.Board.AddShipsToBoard();
             this.rand = new Random(DateTime.Now.Millisecond);

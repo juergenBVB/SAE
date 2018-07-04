@@ -16,6 +16,7 @@ namespace SAE
         private bool startScreenVisible = false;
         private bool endScreenVisible = false;
         private bool mainScreenVisible = false;
+        private string endScreenText;
         private string timerValue;
         private DateTime timerStart;
         private Game mainGame;
@@ -71,6 +72,17 @@ namespace SAE
             {
                 timerValue = value;
                 NotifyPropertyChanged("TimerValue");
+            }
+        }
+
+        public string EndScreenText
+        {
+            get { return endScreenText; }
+
+            set
+            {
+                endScreenText = value;
+                NotifyPropertyChanged("EndScreenText");
             }
         }
 

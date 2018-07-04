@@ -71,7 +71,7 @@ namespace SAE
             this.MainViewModel.PlayerSquareViewList.Clear();
             this.MainViewModel.AISquareViewList.Clear();     
 
-            foreach (var square in this.MainViewModel.MainGame.Player.Board.Squares)
+            foreach (var square in this.MainViewModel.MainGame.Ai.Board.Squares)
             {
                 SolidColorBrush color = Brushes.White;
                 if (square.IsShipPart())
@@ -82,7 +82,7 @@ namespace SAE
                 this.MainViewModel.PlayerSquareViewList.Add(new SquareView(square.PositionX, square.PositionY, color));
             }
 
-            foreach (var square in this.MainViewModel.MainGame.Ai.Board.Squares)
+            foreach (var square in this.MainViewModel.MainGame.Player.Board.Squares)
             {
                 this.MainViewModel.AISquareViewList.Add(new SquareView(square.PositionX, square.PositionY, Brushes.White));
             }
@@ -132,6 +132,14 @@ namespace SAE
                 Square hitSquare = this.MainViewModel.MainGame.Ai.HitLog.Last();
                 this.MainViewModel.PlayerSquareViewList[GameBoard.GetIndexOfCoordinates(
                     hitSquare.PositionX, hitSquare.PositionY, this.MainViewModel.MainGame.Settings.BoardSize)].BackgroundColor = aiHit ? Brushes.Red : Brushes.Gray;
+
+                if (this.MainViewModel.MainGame.IsGameOver())
+                {
+                    this.MainViewModel.MainScreenVisible = false;
+                    this.MainViewModel.EndScreenVisible = true;
+                    this.MainViewModel.EndScreenText = this.MainViewModel.MainGame.CalculateWinner() ? "Congratulations, you won!" : "Sorry, but you lost.";
+                }
+
                 this.OpponentBoard.SelectedItem = null;
             }
         }
