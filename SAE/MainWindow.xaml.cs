@@ -120,16 +120,20 @@ namespace SAE
 
         private void Opponent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SquareView selected = ((SquareView)this.OpponentBoard.SelectedItem);
-            Boolean playerhit = this.MainViewModel.MainGame.ExecuteMove(selected.PositionX, selected.PositionY);
+            if (this.OpponentBoard.SelectedItem != null)
+            {
+                SquareView selected = ((SquareView)this.OpponentBoard.SelectedItem);
+                Boolean playerhit = this.MainViewModel.MainGame.ExecuteMove(selected.PositionX, selected.PositionY);
 
-            Color enemyColor = this.MainViewModel.MainGame.Settings.EnemyColor;
-            selected.BackgroundColor = playerhit ? new SolidColorBrush(enemyColor) : new SolidColorBrush(Colors.Gray);
+                Color enemyColor = this.MainViewModel.MainGame.Settings.EnemyColor;
+                selected.BackgroundColor = playerhit ? new SolidColorBrush(enemyColor) : new SolidColorBrush(Colors.Gray);
 
-            Boolean aiHit = this.MainViewModel.MainGame.ExecuteMove();
-            Square hitSquare = this.MainViewModel.MainGame.Ai.HitLog.Last();
-            this.MainViewModel.PlayerSquareViewList[GameBoard.GetIndexOfCoordinates(
-                hitSquare.PositionX, hitSquare.PositionY, this.MainViewModel.MainGame.Settings.BoardSize)].BackgroundColor = aiHit ? Brushes.Red : Brushes.Gray;
+                Boolean aiHit = this.MainViewModel.MainGame.ExecuteMove();
+                Square hitSquare = this.MainViewModel.MainGame.Ai.HitLog.Last();
+                this.MainViewModel.PlayerSquareViewList[GameBoard.GetIndexOfCoordinates(
+                    hitSquare.PositionX, hitSquare.PositionY, this.MainViewModel.MainGame.Settings.BoardSize)].BackgroundColor = aiHit ? Brushes.Red : Brushes.Gray;
+                this.OpponentBoard.SelectedItem = null;
+            }
         }
     }
 }
