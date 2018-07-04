@@ -100,50 +100,6 @@ namespace SAE
             this.MainViewModel.StartScreenVisible = true;
         }
 
-        private void attack_Click(object sender, MouseButtonEventArgs e)
-        {
-            DependencyObject dep = (DependencyObject)e.OriginalSource;
-
-            while ((dep != null) &&
-            !(dep is DataGridCell) && !(dep is DataGridColumnHeader))
-    {
-                dep = VisualTreeHelper.GetParent(dep);
-            }
-
-            if (dep is DataGridCell)
-            {
-                DataGridCell cell = dep as DataGridCell;
-
-                while ((dep != null) && !(dep is DataGridRow))
-                {
-                    dep = VisualTreeHelper.GetParent(dep);
-                }
-
-                DataGridRow row = dep as DataGridRow;
-                
-            }
-
-            DataGridCell clickedCell = (DataGridCell)sender;
-
-            int rowIndex = FindRowIndex((DataGridRow)dep);
-            int columnIndex = clickedCell.Column.DisplayIndex;
-
-            
-
-        }
-
-        private int FindRowIndex(DataGridRow row)
-        {
-            DataGrid dataGrid =
-                ItemsControl.ItemsControlFromItemContainer(row)
-                as DataGrid;
-
-            int index = dataGrid.ItemContainerGenerator.
-                IndexFromContainer(row);
-
-            return index;
-        }
-
         private void PlayerHitLog_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
