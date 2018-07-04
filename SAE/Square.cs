@@ -31,7 +31,11 @@ namespace SAE
             set { positionX = value; }
         }
 
-        public bool IsHit { get => isHit; set => isHit = value; }
+        public bool IsHit
+        {
+            get { return isHit; }
+            set { isHit = value; }
+        }
 
         public Square(int x, int y)
         {
@@ -63,6 +67,9 @@ namespace SAE
 
         public static Boolean operator ==(Square sq1, Square sq2)
         {
+            {
+                
+            }
             if ((sq1.PositionX == sq2.PositionX) && (sq1.PositionY == sq2.PositionY))
                 return true;
             else

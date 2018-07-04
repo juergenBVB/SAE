@@ -38,7 +38,7 @@ namespace SAE
 
             foreach (Square sq in hitLog)
             {
-                if (sq is ShipPart)
+                if (sq.IsShipPart())
                 {
                     sp = new ShipPart(sq);
 
@@ -70,7 +70,7 @@ namespace SAE
                 {
                     d = TargetDirection;
                 }
-                if (TargetSquare(FindNextSquareInDirection(sp, d)))
+                if (TargetSquare(GetNextSquareInDirection(sp, d, board.Squares)))
                 {
                     TargetDirection = d;
                     if (targetShip.isDestroyed())
@@ -83,34 +83,10 @@ namespace SAE
                 {
                     TargetDirection = Direction.NONE;
                 }
-                return FindNextSquareInDirection(sp, d);
+                return GetNextSquareInDirection(sp, d, board.Squares);
             }
             else
                 return null;
-        }
-
-        private Square FindNextSquareInDirection(Square sq, Direction d)
-        {
-            Square tempSquare;
-            switch (d)
-            {
-                case Direction.UP:
-                    tempSquare = Board.Squares.Find(x => x.PositionX == sq.PositionX && x.PositionY == sq.PositionY - 1);
-                    break;
-                case Direction.DOWN:
-                    tempSquare = Board.Squares.Find(x => x.PositionX == sq.PositionX && x.PositionY == sq.PositionY + 1);
-                    break;
-                case Direction.LEFT:
-                    tempSquare = Board.Squares.Find(x => x.PositionX == sq.PositionX - 1 && x.PositionY == sq.PositionY);
-                    break;
-                case Direction.RIGHT:
-                    tempSquare = Board.Squares.Find(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY - 1);
-                    break;
-                default:
-                    tempSquare = null;
-                    break;
-            }
-            return tempSquare;
         }
 
         public Square MakeMove()
@@ -122,11 +98,9 @@ namespace SAE
             }
             else if (!(difficulty == AIDifficulty.Easy))
             {
-                do
-                {
+               
                     sq = TargetShip();
-                }
-                while (sq == null);
+                
             }
             return sq;
         }

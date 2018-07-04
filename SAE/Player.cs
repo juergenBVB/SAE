@@ -20,7 +20,11 @@ namespace SAE
             set { hitLog = value; }
         }
 
-        public GameBoard Board { get => board; set => board = value; }
+        public GameBoard Board
+        {
+            get { return board; }
+            set { board = value; }
+        }
 
         public Player()
         {
@@ -29,9 +33,9 @@ namespace SAE
         public Player(GameBoard board)
         {
             this.HitLog = new ObservableCollection<Square>();
-            this.Board = board;
+            this.board = board;
             rand = new Random(DateTime.Now.Millisecond);
-            this.legalSquares = GetLegalSquaresOpp();
+            this.legalSquares = board.Squares;
         }
 
         // updates the list of all targetable squares
@@ -55,7 +59,7 @@ namespace SAE
             if (Board.Squares.Any(x => x == sq) && !sq.IsHit)
             {
                 hitLog.Add(sq);
-                Board.Squares.Find(x => x == sq).IsHit = true;
+                this.board.Squares.Find(x => x == sq).IsHit = true;
 
                 // if square is actually a shippart, destroy it
                 if (sq is ShipPart)
@@ -73,9 +77,14 @@ namespace SAE
             {
                 if (sq is ShipPart)
                 {
-                    return true;
+                    foreach (Ship ship in this.board.Ships)
+                    {
+                        if (!ship.isDestroyed() && ship.ShipParts.Any(x => x == sq) && sq.IsHit)
+                        {
+                            return true;
+                        }
+                    }
                 }
-
             }
             return false;
         }
@@ -130,11 +139,96 @@ namespace SAE
                     }
                 }
 
-                s.PlaceShip(sp, d);
-                legalSquares.Remove(sp);
+                RemoveIllegalSquares(s.PlaceShip(sp, d));
                 tempList.Add(s);
             }
             return tempList;
+        }
+
+        private void RemoveIllegalSquares(List<ShipPart> squares)
+        {
+            foreach (Square sq in squares)
+            {
+                Boolean leftsq, rightsq, upsq, downsq, upleftsq, downleftsq, uprightsq, downrighsq, issquare;
+                leftsq = legalSquares.Any(x => x.PositionX == sq.PositionX - 1 && x.PositionY == sq.PositionY);
+                rightsq = legalSquares.Any(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY);
+                upsq = legalSquares.Any(x => x.PositionX == sq.PositionX && x.PositionY == sq.PositionY - 1);
+                downsq = legalSquares.Any(x => x.PositionX == sq.PositionX && x.PositionY == sq.PositionY + 1);
+                upleftsq = legalSquares.Any(x => x.PositionX == sq.PositionX - 1 && x.PositionY == sq.PositionY - 1);
+                downleftsq = legalSquares.Any(x => x.PositionX == sq.PositionX - 1 && x.PositionY == sq.PositionY + 1);
+                uprightsq = legalSquares.Any(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY - 1);
+                downrighsq = legalSquares.Any(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY + 1);
+                if (leftsq)
+                {
+                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.LEFT, legalSquares));
+                }
+                if (rightsq)
+                {
+                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.RIGHT, legalSquares));
+                }
+                if (upsq)
+                {
+                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.UP, legalSquares));
+                }
+                if (downsq)
+                {
+                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.DOWN, legalSquares));
+                }
+                if (upleftsq)
+                {
+                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.UPLEFT, legalSquares));
+                }
+                if (downleftsq)
+                {
+                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.DOWNLEFT, legalSquares));
+                }
+                if (uprightsq)
+                {
+                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.UPRIGHT, legalSquares));
+                }
+                if (downrighsq)
+                {
+                    legalSquares.Remove(GetNextSquareInDirection(sq, Direction.DOWNRIGHT, legalSquares));
+                }
+                legalSquares.Remove(sq);
+            }
+        }
+
+        protected Square GetNextSquareInDirection(Square sq, Direction d, List<Square> source)
+        {
+            Square tempSquare = sq;
+            switch (d)
+            {
+                case Direction.NONE:
+                    break;
+                case Direction.UP:
+                    tempSquare = source.Find(x => x.PositionX == sq.PositionX && x.PositionY == sq.PositionY - 1);
+                    break;
+                case Direction.DOWN:
+                    tempSquare = source.Find(x => x.PositionX == sq.PositionX && x.PositionY == sq.PositionY + 1);
+                    break;
+                case Direction.LEFT:
+                    tempSquare = source.Find(x => x.PositionX == sq.PositionX - 1 && x.PositionY == sq.PositionY);
+                    break;
+                case Direction.RIGHT:
+                    tempSquare = source.Find(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY);
+                    break;
+                case Direction.UPLEFT:
+                    tempSquare = source.Find(x => x.PositionX == sq.PositionX - 1 && x.PositionY == sq.PositionY - 1);
+                    break;
+                case Direction.DOWNLEFT:
+                    tempSquare = source.Find(x => x.PositionX == sq.PositionX - 1 && x.PositionY == sq.PositionY + 1);
+                    break;
+                case Direction.UPRIGHT:
+                    tempSquare = source.Find(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY - 1);
+                    break;
+                case Direction.DOWNRIGHT:
+                    tempSquare = source.Find(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY + 1);
+                    break;
+                default:
+                    break;
+            }
+            return sq;
         }
 
         protected Boolean IsLegalDirection(Square sq, int shipLength, Direction d, Boolean Opp = false)

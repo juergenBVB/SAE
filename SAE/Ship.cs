@@ -48,35 +48,36 @@ namespace SAE
             return true;
         }
 
-        public void PlaceShip(Square sq, Direction d)
+        public List<ShipPart> PlaceShip(Square sq, Direction d)
         {
             switch (ShipType)
             {
                 case ShipTypes.UBoat:
-                    shipParts.AddRange(AddSquaresInDirection(sq.PositionX, sq.PositionY, 2, d));
+                    shipParts.AddRange(AddSquaresInDirection(sq, 2, d));
                     break;
                 case ShipTypes.Destroyer:
-                    shipParts.AddRange(AddSquaresInDirection(sq.PositionX, sq.PositionY, 3, d));
+                    shipParts.AddRange(AddSquaresInDirection(sq, 3, d));
                     break;
                 case ShipTypes.Frigate:
-                    shipParts.AddRange(AddSquaresInDirection(sq.PositionX, sq.PositionY, 4, d));
+                    shipParts.AddRange(AddSquaresInDirection(sq, 4, d));
                     break;
                 case ShipTypes.Battleship:
-                    shipParts.AddRange(AddSquaresInDirection(sq.PositionX, sq.PositionY, 5, d));
+                    shipParts.AddRange(AddSquaresInDirection(sq, 5, d));
                     break;
                 case ShipTypes.AircraftCarrier:
-                    shipParts.AddRange(AddSquaresInDirection(sq.PositionX, sq.PositionY, 6, d));
+                    shipParts.AddRange(AddSquaresInDirection(sq, 6, d));
                     break;
                 default:
                     break;
             }
+            return shipParts;
         }
 
-        private List<ShipPart> AddSquaresInDirection(int startX, int startY, int count, Direction d)
+        private List<ShipPart> AddSquaresInDirection(Square sq, int count, Direction d)
         {
             List<ShipPart> tempList = new List<ShipPart>();
-            int Y = startY;
-            int X = startX;
+            int Y = sq.PositionY;
+            int X = sq.PositionX;
             for (int i = 0; i < count; i++)
             {
                 switch (d)

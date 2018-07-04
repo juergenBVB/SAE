@@ -47,7 +47,7 @@ namespace SAE
                     turn = 1;
                     break;
                 case 1:
-                   hit = this.ai.MakeMove() is ShipPart;
+                   hit = this.ai.MakeMove().IsShipPart();
                     turn = 0;
                     break;
                 default:

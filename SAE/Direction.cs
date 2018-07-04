@@ -12,6 +12,10 @@ namespace SAE
         UP = 0,
         DOWN,
         LEFT,
-        RIGHT
+        RIGHT,
+        UPLEFT,
+        DOWNLEFT,
+        UPRIGHT,
+        DOWNRIGHT,
     }
 }
