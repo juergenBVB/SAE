@@ -8,8 +8,8 @@
     <Grid>
         <StackPanel Visibility="{Binding StartScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}" Width="Auto" Height="Auto">        
             <Label Margin="10" FontSize="48" HorizontalContentAlignment="Center">Battleships</Label>
-            <Button Margin="10" Padding="5" Height="30" FontWeight="Bold" Content="Start game" HorizontalAlignment="Center" Click="StartGame_click"></Button>
-            <Button Margin="10" Padding="5" Height="30" FontWeight="Bold" Content="Open Settings" HorizontalAlignment="Center" Click="OpenSettings_Click" />
+            <Button Margin="10" Padding="5" FontSize="30" Height="60" FontWeight="Bold" Content="Start game" HorizontalAlignment="Center" Click="StartGame_click"></Button>
+            <Button Margin="10" Padding="5" FontSize="30" Height="60" FontWeight="Bold" Content="Settings" HorizontalAlignment="Center" Click="OpenSettings_Click" />
         </StackPanel>        
         <StackPanel Visibility="{Binding MainScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}" Width="Auto" Height="Auto" Name="MainScreen">
             <Label Margin="10" FontSize="48" HorizontalContentAlignment="Center">Battleships</Label>
@@ -88,8 +88,8 @@
         </StackPanel>
         <StackPanel Visibility="{Binding EndScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}" Width="Auto" Height="Auto">
             <Label Margin="10" FontSize="48" HorizontalContentAlignment="Center">Battleships</Label>
-            <Label Margin="10" FontSize="48" HorizontalContentAlignment="Center" Content="{Binding EndScreenText, UpdateSourceTrigger=PropertyChanged}"></Label>
-            <Button Margin="10" Padding="5" Height="30" FontWeight="Bold" Content="Back to start screen" HorizontalAlignment="Center" Click="OpenStartScreen_Click"/>
+            <Label Margin="10" FontSize="30" HorizontalContentAlignment="Center" Content="{Binding EndScreenText, UpdateSourceTrigger=PropertyChanged}"></Label>
+            <Button Margin="10" Padding="5" Height="60" FontSize="30" FontWeight="Bold" Content="Back to start screen" HorizontalAlignment="Center" Click="OpenStartScreen_Click"/>
         </StackPanel>
     </Grid>
 </Window>
