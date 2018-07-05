@@ -42,11 +42,26 @@ namespace SAE
         protected List<Square> GetLegalSquaresOpp()
         {
             List<Square> sqList = new List<Square>();
+            Boolean tooCloseToShip = false;
             foreach (Square sq in this.board.Squares)
             {
                 if (!sq.IsHit)
                 {
-                    sqList.Add(sq);
+                    foreach (Ship ship in this.board.Ships)
+                    {
+                        foreach (Square shipsq in ship.ShipParts)
+                        {
+                            if (!(sq - shipsq))
+                            {
+                                tooCloseToShip = true;
+                                break;
+                            }
+                        }
+                        if (tooCloseToShip)
+                            break;
+                    }
+                    if (!tooCloseToShip)
+                        sqList.Add(sq);
                 }
             }
             return sqList;
@@ -64,6 +79,9 @@ namespace SAE
                 // if square is actually a shippart, destroy it
                 if (sq.IsShipPart())
                 {
+                    foreach (Ship ship in board.Ships)
+                        ship.DestroyShipPart(sq);
+
                     (sq as ShipPart).Destroy();
                     return true;
                 }
@@ -73,9 +91,9 @@ namespace SAE
 
         public Boolean ShipFound()
         {
-            foreach (Square sq in Board.Squares)
+            foreach (Square sq in this.board.Squares)
             {
-                if (sq is ShipPart)
+                if (sq.IsShipPart())
                 {
                     foreach (Ship ship in this.board.Ships)
                     {
@@ -113,7 +131,6 @@ namespace SAE
 
             foreach (Ship s in this.board.Ships)
             {
-
                 sp = new ShipPart(GetRandomLegalSquare());
                 shipLength = s.GetInitialShipLength();
                 d = (Direction)rand.Next(3);

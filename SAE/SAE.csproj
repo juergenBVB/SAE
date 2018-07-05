@@ -75,21 +75,21 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="EnumBindingSourceExtension.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="GameModes.cs" />
-    <Compile Include="Direction.cs" />
+    <Compile Include="Spiellogik\Game.cs" />
+    <Compile Include="Enums\GameModes.cs" />
+    <Compile Include="Enums\Direction.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsWindow.xaml.cs" />
-    <Compile Include="AIDifficulty.cs" />
-    <Compile Include="AIOpponent.cs" />
-    <Compile Include="GameBoard.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Ship.cs" />
-    <Compile Include="ShipPart.cs" />
-    <Compile Include="ShipTypes.cs" />
-    <Compile Include="Square.cs" />
+    <Compile Include="Enums\AIDifficulty.cs" />
+    <Compile Include="Spiellogik\AIOpponent.cs" />
+    <Compile Include="Spiellogik\GameBoard.cs" />
+    <Compile Include="Spiellogik\Player.cs" />
+    <Compile Include="Spiellogik\Ship.cs" />
+    <Compile Include="Spiellogik\ShipPart.cs" />
+    <Compile Include="Enums\ShipTypes.cs" />
+    <Compile Include="Spiellogik\Square.cs" />
     <Compile Include="SquareView.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

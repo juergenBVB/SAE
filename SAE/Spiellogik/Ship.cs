@@ -134,5 +134,15 @@ namespace SAE
             }
             return length;
         }
+
+        public Boolean DestroyShipPart(Square sq)
+        {
+            if (this.shipParts.Any(x => x == sq))
+            {
+                this.shipParts.Find(x => x == sq).Destroy();
+                return true;
+            }
+            return false;
+        }
     }
 }

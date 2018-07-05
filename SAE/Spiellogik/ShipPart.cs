@@ -32,6 +32,7 @@ namespace SAE
         public void Destroy()
         {
             destroyed = true;
+            IsHit = true;
         }
     }
 }

@@ -60,39 +60,30 @@ namespace SAE
             return this.GetType().Equals(typeof(ShipPart));
         }
 
-        public static int operator -(Square sq1, Square sq2)
+        public static Boolean operator -(Square sq1, Square sq2)
         {
-            return Math.Min(sq1.PositionX - sq2.PositionX, sq1.PositionY - sq2.PositionY);
+            return (sq1.PositionX - sq2.PositionX > 1 || sq1.PositionX - sq2.PositionX < -1) && (sq1.PositionY - sq2.PositionY > 1 || sq1.PositionY - sq2.PositionY < -1);
         }
 
         public static Boolean operator ==(Square sq1, Square sq2)
         {
-            {
-                
-            }
-            if ((sq1.PositionX == sq2.PositionX) && (sq1.PositionY == sq2.PositionY))
-                return true;
-            else
-                return false;
+            return (sq1.PositionX == sq2.PositionX) && (sq1.PositionY == sq2.PositionY);
         }
 
         public static Boolean operator !=(Square sq1, Square sq2)
         {
-            if ((sq1.PositionX == sq2.PositionX) && (sq1.PositionY == sq2.PositionY))
-                return false;
-            else
-                return true;
+            return (sq1.PositionX == sq2.PositionX) && (sq1.PositionY == sq2.PositionY);
         }
 
-        public override bool Equals(object obj)
-        {
-            if (obj.GetType() == typeof(Square))
-            {
-                Square sq = (Square)obj;
-                if ((this.PositionX == sq.PositionX) && (this.PositionY == sq.PositionY))
-                    return true;
-            }
-            return false;
-        }
+        //public override bool Equals(object obj)
+        //{
+        //    if (obj.GetType() == typeof(Square))
+        //    {
+        //        Square sq = (Square)obj;
+        //        if ((this.PositionX == sq.PositionX) && (this.PositionY == sq.PositionY))
+        //            return true;
+        //    }
+        //    return false;
+        //}
     }
 }
