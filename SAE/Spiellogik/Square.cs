@@ -60,11 +60,6 @@ namespace SAE
             return this.GetType().Equals(typeof(ShipPart));
         }
 
-        public static Boolean operator -(Square sq1, Square sq2)
-        {
-            return (sq1.PositionX - sq2.PositionX > 1 || sq1.PositionX - sq2.PositionX < -1) && (sq1.PositionY - sq2.PositionY > 1 || sq1.PositionY - sq2.PositionY < -1);
-        }
-
         public static Boolean operator ==(Square sq1, Square sq2)
         {
             return (sq1.PositionX == sq2.PositionX) && (sq1.PositionY == sq2.PositionY);

@@ -10,6 +10,7 @@ namespace SAE
     {
         private AIDifficulty difficulty;
         private Direction TargetDirection = Direction.NONE;
+        private List<Direction> ViableDirections;
 
         public AIOpponent() : base()
         {
@@ -19,6 +20,9 @@ namespace SAE
         public AIOpponent(GameBoard board, AIDifficulty diff) : base(board)
         {
             this.difficulty = diff;
+            this.ViableDirections = new List<Direction>();
+            for (int i = 0; i < 4; i++)
+                ViableDirections.Add((Direction)i);
         }
 
         public Square TargetRandomSquare()
@@ -32,9 +36,9 @@ namespace SAE
         {
             ShipPart sp = null;
             Square targetSquare = null;
-            Boolean shipPartHit = false;
             Boolean squareHit = false;
-            int randomdir = rand.Next(3);
+            Boolean isTargetedShip = false;
+            Direction randomDir = ViableDirections[rand.Next(ViableDirections.Count - 1)];
 
             foreach (Square sq in hitLog)
             {
@@ -44,69 +48,92 @@ namespace SAE
 
                     foreach (Ship ship in board.Ships)
                     {
-                        if (ship.isDestroyed() && ship.ShipParts.Any(x => x == sp))
-                            break;
-                        else if (ship.isDestroyed())
-                            continue;
-                        else
+                        if (!ship.isDestroyed())
                         {
-                            do
-                            {
-                                if (TargetDirection == Direction.NONE)
-                                {
-                                    targetSquare = GetNextSquareInDirection(sp, (Direction)randomdir, board.Squares);
+                            if (ship.ShipParts.Any(x => x == sp))
+                                isTargetedShip = true;
+                        }
+                    }
 
-                                    while (ReferenceEquals(targetSquare, null))
-                                    {
-                                        randomdir++;
-                                        if (randomdir > 3)
-                                            randomdir = 0;
-                                        targetSquare = GetNextSquareInDirection(sp, (Direction)randomdir, board.Squares);
-                                    }
-                                }
-                                else
-                                {
-                                    targetSquare = GetNextSquareInDirection(sp, TargetDirection, board.Squares);
-
-                                    if (ReferenceEquals(targetSquare, null))
-                                    {
-                                        TargetDirection = InvertDirection(TargetDirection);
-                                        targetSquare = GetNextSquareInDirection(sp, TargetDirection, board.Squares);
-                                    }
-                                }
-
-                                if (targetSquare.IsShipPart())
-                                    sp = new ShipPart(targetSquare);
-                            } while (targetSquare.IsShipPart() && sp.Destroyed);
-
+                    if (isTargetedShip)
+                    {
+                        // analyse next square in a direction until its not a destroyed shippart
+                        do
+                        {
                             if (TargetDirection == Direction.NONE)
                             {
-                                shipPartHit = TargetSquare(targetSquare);
-                                squareHit = true;
-                                if (shipPartHit)
-                                    TargetDirection = (Direction)randomdir;
+                                targetSquare = GetNextSquareInDirection(sp, randomDir, board.Squares);
+                                if (ReferenceEquals(targetSquare, null))
+                                {
+                                    ViableDirections.Remove(randomDir);
+
+                                    foreach (Direction d in ViableDirections)
+                                    {
+                                        targetSquare = GetNextSquareInDirection(sp, d, board.Squares);
+                                        if (ReferenceEquals(targetSquare, null))
+                                            ViableDirections.Remove(d);
+                                        else
+                                        {
+                                            randomDir = d;
+                                            break;
+                                        }
+                                    }
+                                }
                             }
                             else
                             {
-                                shipPartHit = TargetSquare(targetSquare);
-                                squareHit = true;
-                                if (!shipPartHit)
+                                targetSquare = GetNextSquareInDirection(sp, TargetDirection, board.Squares);
+
+                                if (ReferenceEquals(targetSquare, null))
+                                {
                                     TargetDirection = InvertDirection(TargetDirection);
-
+                                    targetSquare = GetNextSquareInDirection(sp, TargetDirection, board.Squares);
+                                }
                             }
 
-                            if (shipPartHit || squareHit)
+                            if (targetSquare.IsShipPart())
+                                sp = new ShipPart(targetSquare);
+                            else if (targetSquare.IsHit)
                             {
-                                if (ship.isDestroyed())
-                                    TargetDirection = Direction.NONE;
-                                break;
+                                randomDir = ViableDirections[rand.Next(ViableDirections.Count - 1)];
+                                continue;
                             }
+                        } while (targetSquare.IsShipPart() && sp.Destroyed);
+
+                        if (TargetDirection == Direction.NONE)
+                        {
+                            if (TargetSquare(targetSquare))
+                                TargetDirection = randomDir;
+                            else
+                                ViableDirections.Remove(randomDir);
+                            squareHit = true;
+                        }
+                        else
+                        {
+                            if (!TargetSquare(targetSquare))
+                                TargetDirection = InvertDirection(TargetDirection);
+                            squareHit = true;
+                        }
+
+                        if (squareHit)
+                        {
+                            foreach (Ship ship in this.board.Ships)
+                            {
+                                if (ship.isDestroyed() && ship.ShipParts.Any(x => x == targetSquare))
+                                {
+                                    TargetDirection = Direction.NONE;
+                                    ViableDirections = new List<Direction>();
+                                    for (int i = 0; i < 4; i++)
+                                        ViableDirections.Add((Direction)i);
+                                    break;
+                                }
+                            }
+                            break;
                         }
                     }
-                    if (shipPartHit || squareHit)
-                        break;
                 }
             }
+
             return targetSquare;
         }
 

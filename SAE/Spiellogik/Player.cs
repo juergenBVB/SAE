@@ -38,25 +38,36 @@ namespace SAE
             this.legalSquares = new List<Square>(board.Squares);
         }
 
-        // updates the list of all targetable squares
+        public Boolean SquaresInProximity(Square sq1, Square sq2)
+        {
+            int distance = (int)Math.Sqrt(Math.Pow(sq2.PositionX - sq1.PositionX, 2) + Math.Pow(sq2.PositionY - sq1.PositionY, 2));
+            return distance <= 1;
+        }
+
+        // returns the list of all targetable squares
         protected List<Square> GetLegalSquaresOpp()
         {
             List<Square> sqList = new List<Square>();
             Boolean tooCloseToShip = false;
             foreach (Square sq in this.board.Squares)
             {
+                tooCloseToShip = false;
                 if (!sq.IsHit)
                 {
                     foreach (Ship ship in this.board.Ships)
                     {
-                        foreach (Square shipsq in ship.ShipParts)
+                        if (ship.isDestroyed())
                         {
-                            if (!(sq - shipsq))
+                            foreach (Square shipsq in ship.ShipParts)
                             {
-                                tooCloseToShip = true;
-                                break;
+                                if (SquaresInProximity(shipsq, sq))
+                                {
+                                    tooCloseToShip = true;
+                                    break;
+                                }
                             }
                         }
+
                         if (tooCloseToShip)
                             break;
                     }
@@ -71,7 +82,7 @@ namespace SAE
         public Boolean TargetSquare(Square sq)
         {
             // if square isnt a legal target, do nothing and return false
-            if (Board.Squares.Any(x => x == sq) && !sq.IsHit)
+            if (this.board.Squares.Any(x => x == sq) && !sq.IsHit)
             {
                 hitLog.Add(sq);
                 this.board.Squares.Find(x => x == sq).IsHit = true;
@@ -80,10 +91,11 @@ namespace SAE
                 if (sq.IsShipPart())
                 {
                     foreach (Ship ship in board.Ships)
-                        ship.DestroyShipPart(sq);
-
-                    (sq as ShipPart).Destroy();
-                    return true;
+                       if (ship.DestroyShipPart(sq))
+                        {
+                            (sq as ShipPart).Destroy();
+                            return true;
+                        }
                 }
             }
             return false;
@@ -213,7 +225,7 @@ namespace SAE
 
         protected Square GetNextSquareInDirection(Square sq, Direction d, List<Square> source)
         {
-            Square tempSquare = sq;
+            Square tempSquare = null;
             switch (d)
             {
                 case Direction.NONE:
