@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace SAE
 {
+    /*
+     * The Ship class
+     * does ship related things
+     */
     class Ship
     {
         private ShipTypes shipType;
@@ -39,6 +43,8 @@ namespace SAE
             this.shipParts = parts;
         }
 
+
+        // checks if the ship is destroyed
         public Boolean isDestroyed()
         {
             foreach (ShipPart part in this.shipParts)
@@ -48,9 +54,11 @@ namespace SAE
                     return false;
                 }
             }
+            destroyed = true;
             return true;
         }
 
+        // adds ShipParts to the ship with coordinates based on the starting square and a direction
         public List<ShipPart> PlaceShip(Square sq, Direction d)
         {
             switch (ShipType)
@@ -76,6 +84,7 @@ namespace SAE
             return shipParts;
         }
 
+        // adds squares in a certain direction
         private List<ShipPart> AddSquaresInDirection(Square sq, int count, Direction d)
         {
             List<ShipPart> tempList = new List<ShipPart>();
@@ -108,6 +117,7 @@ namespace SAE
             return tempList;
         }
 
+        // returns the ship length
         public int GetInitialShipLength()
         {
             int length;
@@ -135,6 +145,7 @@ namespace SAE
             return length;
         }
 
+        // destroys a specific shippart
         public Boolean DestroyShipPart(Square sq)
         {
             if (this.shipParts.Any(x => x == sq))
@@ -143,6 +154,14 @@ namespace SAE
                 return true;
             }
             return false;
+        }
+
+        public override string ToString()
+        {
+            if (this.destroyed)
+                return this.ShipType.ToString() + " destroyed!";
+            else
+                return "";
         }
     }
 }

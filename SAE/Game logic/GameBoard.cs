@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace SAE
 {
+    /*
+     * The GameBoard class
+     * contains a list of squares and a list of ships
+     */
     class GameBoard
     {
         private int size;
@@ -39,6 +43,7 @@ namespace SAE
             GenerateShips();
         }
 
+        // generates squares based on the boardsize
         private void GenerateSquares()
         {
             int linex = 0;
@@ -55,16 +60,36 @@ namespace SAE
             }
         }
 
-        private void GenerateShips()
+        // generates ships
+        // the smaller the ship, the likelier it is to spawn
+        private void GenerateShips(int count = -1)
         {
+            //Random rand = new Random(DateTime.Now.Millisecond);
+            //int temp = -1;
+
+            //for (int i = 0; i < count; i++)
+            //{
+            //    temp = rand.Next(100);
+            //    if (temp < 35)
+            //        ships.Add(new Ship(ShipTypes.UBoat, new List<ShipPart>()));
+            //    else if (temp < 60)
+            //        ships.Add(new Ship(ShipTypes.Destroyer, new List<ShipPart>()));
+            //    else if (temp < 75)
+            //        ships.Add(new Ship(ShipTypes.Frigate, new List<ShipPart>()));
+            //    else if (temp < 90)
+            //        ships.Add(new Ship(ShipTypes.Battleship, new List<ShipPart>()));
+            //    else if (true)
+            //        ships.Add(new Ship(ShipTypes.AircraftCarrier, new List<ShipPart>()));
+            //}
+
             ships.Add(new Ship(ShipTypes.UBoat, new List<ShipPart>()));
             ships.Add(new Ship(ShipTypes.Destroyer, new List<ShipPart>()));
             ships.Add(new Ship(ShipTypes.Frigate, new List<ShipPart>()));
             ships.Add(new Ship(ShipTypes.Battleship, new List<ShipPart>()));
             ships.Add(new Ship(ShipTypes.AircraftCarrier, new List<ShipPart>()));
-
         }
 
+        // adds the ships to the gameboard
         public void AddShipsToBoard()
         {
             foreach (Ship ship in this.ships)
@@ -76,6 +101,7 @@ namespace SAE
             }
         }
 
+        // returns the index of a square
         private int GetIndexOfSquare(Square sq)
         {
             if (sq.PositionY > 0)
@@ -88,6 +114,7 @@ namespace SAE
             }
         }
 
+        // returns the index of a set of coordinates
         public static int GetIndexOfCoordinates(int x, int y, int size)
         {
             if (y > 0)
@@ -96,6 +123,7 @@ namespace SAE
                 return x;
         }
 
+        // returns a square based on coordinates
         public Square GetSquareFromCoordinates(int x, int y)
         {
             Square tempSquare = new Square(x, y);

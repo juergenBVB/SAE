@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SAE
 {
+    /*
+     * ShiParts are squares that belong to a ship
+     */
     class ShipPart : Square
     {        
         Boolean destroyed = false;

@@ -48,6 +48,7 @@
                 <StackPanel Orientation="Vertical">
                     <Label FontSize="16">Player recent hits</Label>
                     <ListBox Name="PlayerHitlog" Width="350" Height="300"></ListBox>
+                    <ListBox Name="DestroyedShips" Height="50"/>
                 </StackPanel>                
             </StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -70,6 +71,8 @@
                                 <Setter Property="BorderBrush" Value="Black" />
                                 <Setter Property="Background" Value="{Binding BackgroundColor, UpdateSourceTrigger=PropertyChanged}" />
                                 <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="IsHitTestVisible" Value="False"/>
                             </Style>
                         </ListBox.ItemContainerStyle>
                         <ListBox.ItemsPanel>

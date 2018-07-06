@@ -11,6 +11,10 @@ using System.Windows.Media;
 
 namespace SAE
 {
+    /*
+     * The Settings class
+     * it sets things
+     */
     class Settings : INotifyPropertyChanged
     {
         private int boardSize;

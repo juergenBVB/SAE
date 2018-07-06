@@ -21,7 +21,7 @@ namespace SAE
                     {
                         Type enumType = Nullable.GetUnderlyingType(value) ?? value;
                         if (!enumType.IsEnum)
-                            throw new ArgumentException("Type must be for an Enum.");
+                            throw new ArgumentException("Type must be an Enum.");
                     }
 
                     this._enumType = value;

@@ -47,7 +47,7 @@ namespace SAE
         {
             this.Settings.SaveSettings();
 
-            MessageBox.Show("Settings succesfully saved.",
+            MessageBox.Show("Settings saved successfully.",
                                           "Settings",
                                           MessageBoxButton.OK,
                                           MessageBoxImage.Information);

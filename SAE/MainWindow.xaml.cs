@@ -34,7 +34,8 @@ namespace SAE
             ((INotifyCollectionChanged)this.OpponentHitlog.Items).CollectionChanged += OpponentHitLog_CollectionChanged;
         }
 
-        public MainViewModel MainViewModel {
+        public MainViewModel MainViewModel
+        {
             get { return mainViewModel; }
             set { mainViewModel = value; }
         }
@@ -60,7 +61,7 @@ namespace SAE
             this.MainViewModel.TimerValue = "00:00:00";
             this.PlayerHitlog.ItemsSource = this.MainViewModel.MainGame.Player.HitLog;
             this.OpponentHitlog.ItemsSource = this.MainViewModel.MainGame.Ai.HitLog;
-
+            this.DestroyedShips.Items.Clear();
             this.generateGrids();
             this.MainViewModel.StartTimer();
         }
@@ -70,7 +71,7 @@ namespace SAE
             int boardSize = this.MainViewModel.MainGame.Settings.BoardSize;
 
             this.MainViewModel.PlayerSquareViewList.Clear();
-            this.MainViewModel.AISquareViewList.Clear();     
+            this.MainViewModel.AISquareViewList.Clear();
 
             foreach (var square in this.MainViewModel.MainGame.Ai.Board.Squares)
             {
@@ -92,7 +93,7 @@ namespace SAE
             this.MainViewModel.RowHeight = this.PlayerBoard.Height / boardSize;
 
             this.OpponentBoard.ItemsSource = this.MainViewModel.AISquareViewList;
-            this.PlayerBoard.ItemsSource = this.MainViewModel.PlayerSquareViewList;               
+            this.PlayerBoard.ItemsSource = this.MainViewModel.PlayerSquareViewList;
         }
 
         private void QuitGame_Click(object sender, RoutedEventArgs e)
@@ -124,26 +125,35 @@ namespace SAE
             if (this.OpponentBoard.SelectedItem != null)
             {
                 SquareView selected = ((SquareView)this.OpponentBoard.SelectedItem);
-                Boolean playerhit = this.MainViewModel.MainGame.ExecuteMove(selected.PositionX, selected.PositionY);
-
-                Color enemyColor = this.MainViewModel.MainGame.Settings.EnemyColor;
-                selected.BackgroundColor = playerhit ? new SolidColorBrush(enemyColor) : new SolidColorBrush(Colors.Gray);
-
-                Boolean aiHit = this.MainViewModel.MainGame.ExecuteMove();
-                Square hitSquare = this.MainViewModel.MainGame.Ai.HitLog.Last();
-                this.MainViewModel.PlayerSquareViewList[GameBoard.GetIndexOfCoordinates(
-                    hitSquare.PositionX, hitSquare.PositionY, this.MainViewModel.MainGame.Settings.BoardSize)].BackgroundColor = aiHit ? Brushes.Red : Brushes.Gray;
-
-                if (this.MainViewModel.MainGame.IsGameOver())
+                if (!selected.IsHit)
                 {
-                    this.MainViewModel.MainScreenVisible = false;
-                    this.MainViewModel.EndScreenVisible = true;
-                    String playerName = this.MainViewModel.MainGame.Settings.PlayerName;
-                    this.MainViewModel.EndScreenText = this.MainViewModel.MainGame.CalculateWinner() ? String.Format("Congratulations {0}, you won!", playerName) : 
-                        String.Format("Sorry {0}, but you lost.", playerName);
-                }
+                    Boolean playerhit = this.MainViewModel.MainGame.ExecuteMove(selected.PositionX, selected.PositionY);
+                    foreach (Ship ship in this.mainViewModel.MainGame.Player.Board.Ships)
+                    {
+                        if (ship.isDestroyed() && !DestroyedShips.Items.Contains(ship.ToString()))
+                            DestroyedShips.Items.Add(ship.ToString());
+                    }
 
-                this.OpponentBoard.SelectedItem = null;
+                    Color enemyColor = this.MainViewModel.MainGame.Settings.EnemyColor;
+                    selected.BackgroundColor = playerhit ? new SolidColorBrush(enemyColor) : new SolidColorBrush(Colors.Gray);
+                    selected.IsHit = true;
+
+                    Boolean aiHit = this.MainViewModel.MainGame.ExecuteMove();
+                    Square hitSquare = this.MainViewModel.MainGame.Ai.HitLog.Last();
+                    this.MainViewModel.PlayerSquareViewList[GameBoard.GetIndexOfCoordinates(
+                        hitSquare.PositionX, hitSquare.PositionY, this.MainViewModel.MainGame.Settings.BoardSize)].BackgroundColor = aiHit ? Brushes.Red : Brushes.Gray;
+
+                    if (this.MainViewModel.MainGame.IsGameOver())
+                    {
+                        this.MainViewModel.MainScreenVisible = false;
+                        this.MainViewModel.EndScreenVisible = true;
+                        String playerName = this.MainViewModel.MainGame.Settings.PlayerName;
+                        this.MainViewModel.EndScreenText = this.MainViewModel.MainGame.CalculateWinner() ? String.Format("Congratulations {0}, you won!", playerName) :
+                            String.Format("Sorry {0}, but you lost.", playerName);
+                    }
+
+                    this.OpponentBoard.SelectedItem = null;
+                }
             }
         }
     }

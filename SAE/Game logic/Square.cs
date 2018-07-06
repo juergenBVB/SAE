@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace SAE
 {
+    /*
+     * The Square class
+     * it isn't actually square
+     * or maybe it is, I can't really tell
+     * but probably not
+     */
     class Square
     {
 
@@ -48,6 +54,7 @@ namespace SAE
 
         }
 
+        // overWRITEs the ToString method
         public override string ToString()
         {
             String hitMiss = this.IsShipPart() ? "Hit" : "No Hit";
@@ -60,25 +67,16 @@ namespace SAE
             return this.GetType().Equals(typeof(ShipPart));
         }
 
+        // overWRITEs the == operator which practically enables EVERYTHING ELSE
         public static Boolean operator ==(Square sq1, Square sq2)
         {
             return (sq1.PositionX == sq2.PositionX) && (sq1.PositionY == sq2.PositionY);
         }
 
+        // irrelevant, == is where it's at
         public static Boolean operator !=(Square sq1, Square sq2)
         {
             return (sq1.PositionX == sq2.PositionX) && (sq1.PositionY == sq2.PositionY);
         }
-
-        //public override bool Equals(object obj)
-        //{
-        //    if (obj.GetType() == typeof(Square))
-        //    {
-        //        Square sq = (Square)obj;
-        //        if ((this.PositionX == sq.PositionX) && (this.PositionY == sq.PositionY))
-        //            return true;
-        //    }
-        //    return false;
-        //}
     }
 }

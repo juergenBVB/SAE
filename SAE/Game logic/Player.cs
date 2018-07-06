@@ -7,12 +7,20 @@ using System.Threading.Tasks;
 
 namespace SAE
 {
+    /*
+     * The Player class
+     * Contains all player based logic, like placing ships and targeting enemy ships 
+     */
     class Player
     {
+        // ObservableCollections enable GUI components to observe the list
         protected ObservableCollection<Square> hitLog;
+        
+        // a list that is used for placing ships
         protected List<Square> legalSquares;
         protected GameBoard board;
         protected Random rand;
+        protected List<Direction> ViableDirections;
 
         internal ObservableCollection<Square> HitLog
         {
@@ -36,24 +44,37 @@ namespace SAE
             this.board = board;
             rand = new Random(DateTime.Now.Millisecond);
             this.legalSquares = new List<Square>(board.Squares);
+            ResetDirections();
         }
 
+        // Checks if two squares are within a distance of 1
         public Boolean SquaresInProximity(Square sq1, Square sq2)
         {
             int distance = (int)Math.Sqrt(Math.Pow(sq2.PositionX - sq1.PositionX, 2) + Math.Pow(sq2.PositionY - sq1.PositionY, 2));
             return distance <= 1;
         }
 
-        // returns the list of all targetable squares
+        // Refills the ViableDirections list, which usually contains the directions UP, DOWN, LEFT and RIGHT
+        protected void ResetDirections()
+        {
+            this.ViableDirections = new List<Direction>();
+            for (int i = 0; i < 4; i++)
+                ViableDirections.Add((Direction)i);
+        }
+
+        // returns the list of all targetable squares on the opponent's gameboard
         protected List<Square> GetLegalSquaresOpp()
         {
             List<Square> sqList = new List<Square>();
             Boolean tooCloseToShip = false;
+            int shortestShipLength = int.MaxValue;
             foreach (Square sq in this.board.Squares)
             {
                 tooCloseToShip = false;
                 if (!sq.IsHit)
                 {
+                    // find destroyed ships and check if the target square is within distance of 1 to that ship
+                    // if it is, then ignore that square
                     foreach (Ship ship in this.board.Ships)
                     {
                         if (ship.isDestroyed())
@@ -67,11 +88,39 @@ namespace SAE
                                 }
                             }
                         }
+                        else
+                            if (ship.Length < shortestShipLength)
+                            shortestShipLength = ship.Length;
 
                         if (tooCloseToShip)
                             break;
                     }
-                    if (!tooCloseToShip)
+
+                    // only target squares that aren't blocked off by already hit squares and board limits
+                    // add them if the proximity could fit the smallest not destroyed ship
+                    Boolean legalDirExists = false;
+                    foreach (Direction d in ViableDirections)
+                    {
+                        Boolean shipFits = true;
+                        for (int i = 0; i < shortestShipLength - 1; i++)
+                        {
+                            Square tempSquare = GetNextSquareInDirection(sq, d, this.board.Squares);
+                            if (ReferenceEquals(tempSquare, null))
+                                shipFits = false;
+                            else if (tempSquare.IsHit)
+                                shipFits = false;
+
+                            if (shipFits)
+                                break;
+                        }
+                        if (shipFits)
+                        {
+                            legalDirExists = true;
+                            break;
+                        }
+                    }
+                    // add the square if it's neither too close to a destroyed ship, nor blocked off
+                    if (!tooCloseToShip && legalDirExists)
                         sqList.Add(sq);
                 }
             }
@@ -81,7 +130,7 @@ namespace SAE
         // target a specific square on the opponent's gameboard
         public Boolean TargetSquare(Square sq)
         {
-            // if square isnt a legal target, do nothing and return false
+            // if square is already hit or doesn't exist at all, return false and target nothing
             if (this.board.Squares.Any(x => x == sq) && !sq.IsHit)
             {
                 hitLog.Add(sq);
@@ -91,7 +140,7 @@ namespace SAE
                 if (sq.IsShipPart())
                 {
                     foreach (Ship ship in board.Ships)
-                       if (ship.DestroyShipPart(sq))
+                        if (ship.DestroyShipPart(sq))
                         {
                             (sq as ShipPart).Destroy();
                             return true;
@@ -101,6 +150,7 @@ namespace SAE
             return false;
         }
 
+        // checks if we have found a ship on the gameboard
         public Boolean ShipFound()
         {
             foreach (Square sq in this.board.Squares)
@@ -109,6 +159,7 @@ namespace SAE
                 {
                     foreach (Ship ship in this.board.Ships)
                     {
+                        // only return true if the ship wasnt destroyed already and contains the square
                         if (!ship.isDestroyed() && ship.ShipParts.Any(x => x == sq) && sq.IsHit)
                         {
                             return true;
@@ -119,6 +170,7 @@ namespace SAE
             return false;
         }
 
+        // returns a random 'legal' square, belonging to either the player itself or the opponent 
         protected Square GetRandomLegalSquare(Boolean isTarget = false)
         {
             Square sq;
@@ -133,7 +185,7 @@ namespace SAE
             return sq;
         }
 
-        // randomly places all ships for the ai
+        // randomly places all ships on the gameboard
         public List<Ship> PlaceShips()
         {
             List<Ship> tempList = new List<Ship>();
@@ -146,27 +198,25 @@ namespace SAE
                 sp = new ShipPart(GetRandomLegalSquare());
                 shipLength = s.GetInitialShipLength();
                 d = (Direction)rand.Next(3);
+                int tries = 0;
 
                 // try to find a direction that fits the length of the ship
-                while (!IsLegalDirection(sp, shipLength, d))
+                // if we haven't found a direction after x tries, get a new square
+                while (!IsLegalDirection(sp, shipLength, d) && tries < 20)
                 {
-                    // try finding a random direction the ship would fit in
-                    int tries = 0;
-                    while (!IsLegalDirection(sp, shipLength, d) && tries < 20)
+                    if (IsLegalDirection(sp, shipLength, d))
+                        break;
+                    else
                     {
                         d = (Direction)rand.Next(3);
                         tries++;
+                        if (tries == 19)
+                        {
+                            sp = new ShipPart(GetRandomLegalSquare(false));
+                            tries = 0;
+                        }
                     }
-
-                    if (IsLegalDirection(sp, shipLength, d))
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        sp = new ShipPart(GetRandomLegalSquare(false));
-                    }
-                }
+                }      
 
                 RemoveIllegalSquares(s.PlaceShip(sp, d));
                 tempList.Add(s);
@@ -174,10 +224,12 @@ namespace SAE
             return tempList;
         }
 
+        // removes a list of illegal squares from the legalSquares list
         private void RemoveIllegalSquares(List<ShipPart> squares)
         {
             foreach (Square sq in squares)
             {
+                // remove all bordering squares, since those aren't legal for placing other ships
                 Boolean leftsq, rightsq, upsq, downsq, upleftsq, downleftsq, uprightsq, downrighsq;
                 leftsq = legalSquares.Any(x => x.PositionX == sq.PositionX - 1 && x.PositionY == sq.PositionY);
                 rightsq = legalSquares.Any(x => x.PositionX == sq.PositionX + 1 && x.PositionY == sq.PositionY);
@@ -223,6 +275,8 @@ namespace SAE
             }
         }
 
+        // returns the next square in a direction d
+        // returns null if the square would be outside the board
         protected Square GetNextSquareInDirection(Square sq, Direction d, List<Square> source)
         {
             Square tempSquare = null;
@@ -259,6 +313,8 @@ namespace SAE
             }
             return tempSquare;
         }
+
+        // checks if direction d is a viable direction for the given length of a ship
 
         protected Boolean IsLegalDirection(Square sq, int shipLength, Direction d, Boolean Opp = false)
         {

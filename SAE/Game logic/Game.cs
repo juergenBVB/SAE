@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace SAE
 {
+    /*
+     * The Game class
+     * does Game related things (who would've thought, am I right?!)
+     */
     class Game
     {
         private Settings settings;
@@ -13,10 +17,8 @@ namespace SAE
         private GameBoard aiGameBoard;
         private AIOpponent ai;
         private Player player;
-        private Random rand;
-        private int turn;
 
-        internal Settings Settings {  get { return settings; } set { settings = value; } }
+        internal Settings Settings { get { return settings; } set { settings = value; } }
         internal GameBoard PlayerGameBoard { get { return playerGameBoard; } set { playerGameBoard = value; } }
         internal GameBoard AiGameBoard { get { return aiGameBoard; } set { aiGameBoard = value; } }
         internal AIOpponent Ai { get { return ai; } set { ai = value; } }
@@ -30,37 +32,30 @@ namespace SAE
             this.PlayerGameBoard = new GameBoard(this.Settings.BoardSize, new List<Ship>());
             this.Player = new Player(this.PlayerGameBoard);
             this.AiGameBoard.Ships = this.Ai.PlaceShips();
-            this.PlayerGameBoard.Ships = this.Player.PlaceShips();
+            this.playerGameBoard.Ships = this.player.PlaceShips();
             this.Player.Board.AddShipsToBoard();
             this.Ai.Board.AddShipsToBoard();
-            this.rand = new Random(DateTime.Now.Millisecond);
-            this.turn = this.rand.Next(1);
         }
 
+        // executes a Move of either the player or the ai
         public Boolean ExecuteMove(int x = -1, int y = -1)
         {
             Boolean hit = false;
-            switch (turn)
-            {
-                case 0:
-                    hit = this.player.TargetSquare(this.player.Board.GetSquareFromCoordinates(x, y));
-                    turn = 1;
-                    break;
-                case 1:
-                   hit = this.ai.MakeMove().IsShipPart();
-                    turn = 0;
-                    break;
-                default:
-                    break;
-            }
+            if (x != -1 && y != -1)
+                hit = this.player.TargetSquare(this.player.Board.GetSquareFromCoordinates(x, y));
+            else
+                hit = this.ai.MakeMove().IsShipPart();
+
             return hit;
         }
 
+        // checks if a player has lost all ships (yes, the ai is also considered a player and no, mayonnaise is NOT considered a player)
         public Boolean IsGameOver()
         {
             Boolean remainingPlayer = true;
             Boolean remainingAi = true;
-            foreach (Square sq in this.player.Board.Squares) {
+            foreach (Square sq in this.player.Board.Squares)
+            {
                 if (sq.IsShipPart() && !((ShipPart)sq).Destroyed)
                 {
                     remainingPlayer = false;
@@ -78,6 +73,8 @@ namespace SAE
             return (remainingPlayer || remainingAi);
         }
 
+
+        // calculases the winner based on who has lost all their ships
         public Boolean CalculateWinner()
         {
             foreach (Square sq in this.player.Board.Squares)
