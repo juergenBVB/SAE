@@ -32,6 +32,7 @@ namespace SAE
             this.MainViewModel.StartScreenVisible = true;
             ((INotifyCollectionChanged)this.PlayerHitlog.Items).CollectionChanged += PlayerHitLog_CollectionChanged;
             ((INotifyCollectionChanged)this.OpponentHitlog.Items).CollectionChanged += OpponentHitLog_CollectionChanged;
+            ((INotifyCollectionChanged)this.DestroyedShips.Items).CollectionChanged += DestroyedShips_CollectionChanged;
         }
 
         public MainViewModel MainViewModel
@@ -117,6 +118,15 @@ namespace SAE
             {
                 // scroll the new item into view   
                 this.OpponentHitlog.ScrollIntoView(e.NewItems[0]);
+            }
+        }
+
+        private void DestroyedShips_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                // scroll the new item into view   
+                this.DestroyedShips.ScrollIntoView(e.NewItems[0]);
             }
         }
 
